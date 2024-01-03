@@ -47,13 +47,13 @@ ggarrange(
     pivot_longer(cols = starts_with("vl_"), names_to = "year_vl", values_to = "VL") |>
     ggplot(aes(x = year_vl, y = log10(VL+1))) + 
     geom_boxplot() + 
-    labs(x = "Year", y = "Log_10(HIV RNA copies/mL)") + 
+    labs(x = "Year", y = "Log10(HIV RNA copies/mL)") + 
     theme_bw(),
   viral |>
     pivot_longer(cols = starts_with("cd_"), names_to = "year_cd", values_to = "CD") |>
     ggplot(aes(x = year_cd, y = CD)) + 
     geom_boxplot() + 
-    labs(x = "Year", y = "CD4 T cells cells/mm^3 blood") + 
+    labs(x = "Year", y = "CD4T cells/mm^3 blood") + 
     theme_bw(),
   labels = c("A", "B"), nrow = 2
   )
