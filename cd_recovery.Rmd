@@ -25,12 +25,12 @@ library(tidyverse)
 data(viral, package = "viraldomain")
 recovery_rates <- viral |>
   mutate(
-    recovery_rate_2020 = (cd_2021 - cd_2019) / cd_2019,
-    recovery_rate_2021 = (cd_2022 - cd_2021) / cd_2021,
-    recovery_rate_2021_2yr = (cd_2022 - cd_2019) / cd_2019,
-    viral_rate_2020 = (vl_2021 - vl_2019) / vl_2019,
-    viral_rate_2021 = (vl_2022 - vl_2021) / vl_2021,
-    viral_rate_2021_2yr = (vl_2022 - vl_2019) / vl_2019
+    recovery_rate_2021 = (cd_2021 - cd_2019) / cd_2019,
+    recovery_rate_2022 = (cd_2022 - cd_2021) / cd_2021,
+    recovery_rate_2022_2yr = (cd_2022 - cd_2019) / cd_2019,
+    viral_rate_2021 = (vl_2021 - vl_2019) / (vl_2019+1),
+    viral_rate_2022 = (vl_2022 - vl_2021) / (vl_2021+1),
+    viral_rate_2022_2yr = (vl_2022 - vl_2019) / (vl_2019+1)
   )
 ```
 
@@ -66,6 +66,32 @@ The majority of patients had non-zero viral loads in 2019, with a wide range. In
 In Figure \@ref(fig:longplot) B, the median CD4 count in 2019 is 494, showing a central tendency. In 2021, the median CD4 count is 454, indicating relatively stable counts compared to 2019. The median CD4 count in 2022 is 547, showing a potential increase compared to 2021.
 
 One patient stands out with a remarkably high CD4 count of 1960 in 2021, potentially indicating a unique response to treatment. Only two patients maintain relatively stable CD4 counts over the observed years, one patient experiences a significant drop in CD4 count from 2021 to 2022, but the rest of the cohort shows a cell count increase.
+
+```{r rateplot, echo = FALSE, fig.cap="Patterns of HIV Viral Dynamics in Response to Treatment. A, Viral Load Change Rates Across Years. B, Longitudinal Analysis of CD4 T Cell Recovery Rates Over Time."}
+ggarrange(
+  recovery_rates |>
+    pivot_longer(cols = starts_with("viral_"), names_to = "year_vr", values_to = "VR") |>
+    ggplot(aes(x = year_vr, y = log10(VR+1))) + 
+    geom_boxplot() + 
+    labs(x = "Year", y = "Viral load change rate") + 
+    theme_bw(),
+  recovery_rates |>
+    pivot_longer(cols = starts_with("recovery_"), names_to = "year_rr", values_to = "RR") |>
+    ggplot(aes(x = year_rr, y = RR)) + 
+    geom_boxplot() + 
+    labs(x = "Year", y = "CD4T Cell Recovery Rate") + 
+    theme_bw(),
+  labels = c("A", "B"), nrow = 2
+  )
+```
+
+Now, Figure \@ref(fig:rateplot) A displays the viral change rates, exhibiting diverse patterns across patients. Notable variations are observed in the 1-year and 2-year differences. The longitudinal trends for the 2021 viral rates show a range from -0.99 to 49248.00, indicating significant variability. The majority of values are negative, with some extreme positive values, indicating a stabilization towards undetectable load but with some persistence on viral activity. The 2022 viral rate ranges from -0.9999 to 79.5529, showcasing a diminished spectrum. Positive values indicate an increase, while negative values suggest a decrease, with the mean behavior pointing towards an overall decrease in rates. The 2022 viral rate with a 2-Year difference also exhibits a wide range from -1.00 to 49248.00, emphasizing the impact of longer-term changes. Notable positive and negative values reflect diverse responses. Seasonality shows some patients with consistent trends over the short term, while others exhibit fluctuations over a more extended period. Short-term seasonality is evident in rapid changes, while long-term patterns vary widely. Extreme values, such as 49248.00, may indicate outliers or specific responses to treatment interventions and potential influencing factors.
+
+In Figure \@ref(fig:rateplot) B, CD4 T cell count recovery rates show a range of positive and negative values, showing a substantial variability is observed across patients, reflecting diverse responses to treatment. The longitudinal trend for the 2021 recovery rate ranges from -0.70250 to 2.52518, both positive and negative values indicate varying rates of improvement or decline. The 2022 recovery rate ranges from -0.61631 to 1.27523. The mean suggests an overall positive trend, with more patients experiencing improvement. The 2022 recovery rate with a 2-Year difference presents a range from -0.628655 to 0.741935, emphasizing longer-term changes. The mean is close to zero, suggesting a stabilizing effect over the two-year period. Short-term fluctuations in recovery rates may be indicative of response variations to ART interventions. Long-term stability, as indicated by the mean of the 2-year recovery rate, suggests a potential stabilizing effect of ART.
+
+The effect on the mean recovery rate for 2022 (2-Year) being close to zero may indicate a stabilizing effect of ART on CD4 T cell counts over a longer duration. THe majority of patients show consistent positive recovery trends, while others exhibit fluctuations. Extreme positive values indicate a substantial increase in cell recovery, which can be considered beneficial for overall health. These high positive values suggest a significant improvement in CD4 T cell counts for the corresponding patients. Patients with recovery rates significantly above the mean and closer to 2.52518 are experiencing an extraordinary improvement in CD4 T cell counts. This indicates a robust positive response to the treatment regimen: igher positive recovery rates are generally associated with better immune system restoration and improved CD4 T cell counts contribute to enhanced immune function, thus, reducing susceptibility to opportunistic infections.
+
+Long-term stability in CD4 T cell recovery, as indicated by the 2-year recovery rate, suggests sustained health benefits for these individuals which is consistent with positive trends over an extended period and are indicative of the effectiveness of the treatment protocol.
 
 
 # Session info
