@@ -5,7 +5,8 @@ author:
   affiliation: Universidad Autónoma de Guerrero
   email: 22253567@uagro.mx
 output:
-  BiocStyle::html_document
+  BiocStyle::html_document:
+    keep_md: true
 vignette: |
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
