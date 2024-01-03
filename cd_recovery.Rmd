@@ -1,0 +1,74 @@
+---
+title: "Cell recovery under antiretroviral therapy"
+author:
+- name: Juan Pablo Acuña González
+  affiliation: Universidad Autónoma de Guerrero
+  email: 22253567@uagro.mx
+output:
+  BiocStyle::html_document
+vignette: |
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+    
+# Introduction
+
+For the second quarter of 2023, it is estimated that 125,527 people living with human immunodeficiency virus (HIV) are on antiretroviral treatment with active status, according to the Secretary of Health in Mexico. CD4 T cells percentages at different times have been consistently identified as correlates of CD4 T cell recovery. CD4 T cell proportions, along with other accessible variables, could serve as predictors for the immunological response to antiretroviral therapy (ART) in patients with advanced HIV infection.
+
+
+To create accessible variables for predictors of CD4 T cell recovery and viral load, the `r CRANpkg("tidyverse")` suite can be used for data transformation, and the `r CRANpkg("viraldomain")` package can be used to access CD4 counts and viral load data. The goal is to calculate recovery rates for each consecutive year, taking both 2019 and 2021 as basal counts, considering one year and two year change rates.
+
+```{r basal, message=FALSE}
+library(tidyverse)
+data(viral, package = "viraldomain")
+recovery_rates <- viral |>
+  mutate(
+    recovery_rate_2020 = (cd_2021 - cd_2019) / cd_2019,
+    recovery_rate_2021 = (cd_2022 - cd_2021) / cd_2021,
+    recovery_rate_2021_2yr = (cd_2022 - cd_2019) / cd_2019,
+    viral_rate_2020 = (vl_2021 - vl_2019) / vl_2019,
+    viral_rate_2021 = (vl_2022 - vl_2021) / vl_2021,
+    viral_rate_2021_2yr = (vl_2022 - vl_2019) / vl_2019
+  )
+```
+
+
+# Patient data
+
+Data processing followed 35 patients under ART during three years: 2019, 2021 and 2022. Twenty two patients had reached undetectable viral load (VL) by year 2022, and had available CD4 T cell counts at each year. Data were obtained from routine laboratory tests of HIV treatment follow-up. 
+
+```{r longplot, echo = FALSE, fig.cap="Cohort’s response to ART from 2019 to 2022. A, Viral load (HIV RNA copies/mL blood). B, CD4 T cell count (cells/mm3 blood)"}
+library(ggpubr)
+library(tidyr)
+ggarrange(
+  viral |>
+    pivot_longer(cols = starts_with("vl_"), names_to = "year_vl", values_to = "VL") |>
+    ggplot(aes(x = year_vl, y = log10(VL+1))) + 
+    geom_boxplot() + 
+    labs(x = "Year", y = "Log_10(HIV RNA copies/mL)") + 
+    theme_bw(),
+  viral |>
+    pivot_longer(cols = starts_with("cd_"), names_to = "year_cd", values_to = "CD") |>
+    ggplot(aes(x = year_cd, y = CD)) + 
+    geom_boxplot() + 
+    labs(x = "Year", y = "CD4 T cells cells/mm^3 blood") + 
+    theme_bw(),
+  labels = c("A", "B"), nrow = 2
+  )
+```
+
+Figure \@ref(fig:longplot) A shows viral loads in 2019 have a range from 0 to 38961, with a median of 93. In 2021, there is a notable increase in viral loads, with a median of 262 and a maximum of 516675. Viral loads in 2022 show a similar pattern to 2021, with some patients having high values.
+
+The majority of patients had non-zero viral loads in 2019, with a wide range. In 2021, there is a substantial increase in viral loads for several patients. Viral loads in 2022 show variability, with the mean behavior achieving undetectable viral load and many patients showing low values and few others showing persistence with previous years, though these values act as outliers and they could be due to random noise in the cohort since they belong to patients with viral loads higher than average.
+
+In Figure \@ref(fig:longplot) B, the median CD4 count in 2019 is 494, showing a central tendency. In 2021, the median CD4 count is 454, indicating relatively stable counts compared to 2019. The median CD4 count in 2022 is 547, showing a potential increase compared to 2021.
+
+One patient stands out with a remarkably high CD4 count of 1960 in 2021, potentially indicating a unique response to treatment. Only two patients maintain relatively stable CD4 counts over the observed years, one patient experiences a significant drop in CD4 count from 2021 to 2022, but the rest of the cohort shows a cell count increase.
+
+
+# Session info
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
