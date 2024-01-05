@@ -36,24 +36,23 @@ recovery_rates <- viral |>
 glimpse(recovery_rates)
 # Rows: 35
 # Columns: 12
-# $ cd_2019                <dbl> 825, 170, 343, 424, 442, 508, 560, 174, 765, 781, 245, 528, 418, 801, 603, 495, 346, 781, 78…
-# $ vl_2019                <dbl> 41, 11389, 38962, 41, 76, 4096, 104, 11389, 47, 104, 11389, 41, 1, 11389, 1, 4096, 41, 94, 5…
-# $ cd_2021                <dbl> 993, 276, 332, 455, 480, 554, 497, 231, 606, 433, 171, 671, 239, 239, 635, 423, 430, 514, 32…
-# $ vl_2021                <dbl> 81, 1691, 5114, 72, 290, 3064, 1, 263, 1, 15090, 13017, 1514, 61, 61, 49249, 159309, 57, 1, …
-# $ cd_2022                <dbl> 701, 128, 128, 548, 548, 548, 778, 150, 629, 615, 254, 919, 327, 327, 575, 362, 254, 727, 66…
-# $ vl_2022                <dbl> 1, 1, 53251, 1, 41, 1902, 1, 956, 1, 1, 1, 1, 41, 1, 49249, 159309, 57, 1, 516676, 50, 238, …
-# $ recovery_rate_2021     <dbl> 1.2038835, 1.6272189, 0.9678363, 1.0732861, 1.0861678, 1.0907298, 0.8872987, 1.3294798, 0.79…
-# $ recovery_rate_2022     <dbl> 0.7056452, 0.4618182, 0.3836858, 1.2048458, 1.1419624, 0.9891501, 1.5665323, 0.6478261, 1.03…
-# $ recovery_rate_2022_2yr <dbl> 0.8495146, 0.7514793, 0.3713450, 1.2931442, 1.2403628, 1.0788955, 1.3899821, 0.8612717, 0.82…
-# $ viral_rate_2021        <dbl> 1.975610e+00, 1.484766e-01, 1.312561e-01, 1.756098e+00, 3.815789e+00, 7.480469e-01, 9.615385…
-# $ viral_rate_2022        <dbl> 1.234568e-02, 5.913661e-04, 1.041279e+01, 1.388889e-02, 1.413793e-01, 6.207572e-01, 1.000000…
-# $ viral_rate_2022_2yr    <dbl> 2.439024e-02, 8.780402e-05, 1.366742e+00, 2.439024e-02, 5.394737e-01, 4.643555e-01, 9.615385…
+# $ cd_2019                <dbl> 826.0037, 171.0233, 343.9983, 425.0167, 442.9945, 509.0036, 561.0104, 175.0028, 766.0277, 78…
+# $ vl_2019                <dbl> 42.095592, 11390.034161, 38962.985396, 42.006169, 77.041309, 4096.941839, 104.995359, 11390.…
+# $ cd_2021                <dbl> 993.9797, 276.9826, 332.9770, 455.9728, 480.9850, 554.9740, 498.0103, 232.0022, 606.9889, 43…
+# $ vl_2021                <dbl> 8.104566e+01, 1.692232e+03, 5.114226e+03, 7.323554e+01, 2.904255e+02, 3.065528e+03, 1.696200…
+# $ cd_2022                <dbl> 702.0181, 128.9572, 128.9533, 549.0113, 549.0466, 549.0044, 779.0113, 150.9762, 630.0222, 61…
+# $ vl_2022                <dbl> 2.226647e+00, 2.592188e+00, 5.325269e+04, 1.084262e+00, 4.143402e+01, 1.903224e+03, 2.070263…
+# $ recovery_rate_2021     <dbl> 0.20335982, 0.61956134, -0.03203875, 0.07283515, 0.08575829, 0.09031447, -0.11229761, 0.3257…
+# $ recovery_rate_2022     <dbl> -0.29372990, -0.53442152, -0.61272625, 0.20404403, 0.14150457, -0.01075660, 0.56424742, -0.3…
+# $ recovery_rate_2022_2yr <dbl> -0.15010294, -0.24596709, -0.62513402, 0.29174076, 0.23939805, 0.07858639, 0.38858618, -0.13…
+# $ viral_rate_2021        <dbl> 9.252767e-01, -8.514287e-01, -8.687414e-01, 7.434472e-01, 2.769737e+00, -2.517522e-01, -9.83…
+# $ viral_rate_2022        <dbl> -9.725260e-01, -9.984682e-01, 9.412661e+00, -9.851949e-01, -8.573334e-01, -3.791530e-01, 2.2…
+# $ viral_rate_2022_2yr    <dbl> -9.471050e-01, -9.997724e-01, 3.667509e-01, -9.741880e-01, -4.621844e-01, -5.354526e-01, -9.…
 
 
 ## Data spending
-set.seed(1501)
 cd_split <- initial_split(recovery_rates |> 
-                            mutate(cd_2022 = scale(cd_2022, center = TRUE, scale = TRUE))
+                            mutate_at("cd_2022", ~(scale(., center = TRUE, scale = TRUE) |> as.vector()))
                           )
 cd_train <- training(cd_split)
 cd_test  <- testing(cd_split)
@@ -62,7 +61,8 @@ cd_folds <- vfold_cv(cd_train, repeats = 5)
 
 set.seed(1503)
 vl_split <- initial_split(recovery_rates |> 
-                            mutate(vl_2022 = scale(log10(vl_2022), center = TRUE, scale = TRUE))
+                            mutate(vl_2022 = log10(vl_2022)) |>
+                            mutate_at('vl_2022', ~(scale(.) |> as.vector()))
                           )
 vl_train <- training(vl_split)
 vl_test  <- testing(vl_split)
@@ -78,10 +78,8 @@ poly_cd <- normalized_cd |>
   step_poly(all_predictors()) |> 
   step_interact(~ all_predictors():all_predictors())
 
-normalized_vl <- recipe(vl_2022 ~ ., data = vl_train) |>
-  step_log(starts_with(c("vl", "viral")), base = 10) |>
-  step_normalize(all_predictors()) 
-poly_vl <- normalized_vl |> 
+simple_vl <- recipe(vl_2022 ~ ., data = vl_train)
+poly_vl <- simple_vl |> 
   step_poly(all_predictors()) |> 
   step_interact(~ all_predictors():all_predictors())
 
@@ -203,50 +201,45 @@ norm_wfl_cd
 #3 normalized_KNN_cd            <tibble [1 × 4]> <opts[0]> <list [0]>
 #4 normalized_neural_network_cd <tibble [1 × 4]> <opts[1]> <list [0]>
    
-norm_wfl_vl <- workflow_set(
-  preproc = list(normalized = normalized_vl), 
+sim_wfl_vl <- workflow_set(
+  preproc = list(simple = simple_vl), 
   models = list(SVM_radial_vl = svm_r_spec, SVM_poly_vl = svm_p_spec, 
                 KNN_vl = knn_spec, neural_network_vl = nnet_spec)
   )
-norm_wfl_vl
+sim_wfl_vl
 ## A workflow set/tibble: 4 × 4
-#  wflow_id                     info             option    result    
-#  <chr>                        <list>           <list>    <list>    
-#1 normalized_SVM_radial_vl     <tibble [1 × 4]> <opts[0]> <list [0]>
-#2 normalized_SVM_poly_vl       <tibble [1 × 4]> <opts[0]> <list [0]>
-#3 normalized_KNN_vl            <tibble [1 × 4]> <opts[0]> <list [0]>
-#4 normalized_neural_network_vl <tibble [1 × 4]> <opts[0]> <list [0]>
-norm_wfl_vl |> extract_workflow(id = "normalized_SVM_poly_vl")
-# ══ Workflow ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+#  wflow_id                 info             option    result    
+#  <chr>                    <list>           <list>    <list>    
+#1 simple_SVM_radial_vl     <tibble [1 × 4]> <opts[0]> <list [0]>
+#2 simple_SVM_poly_vl       <tibble [1 × 4]> <opts[0]> <list [0]>
+#3 simple_KNN_vl            <tibble [1 × 4]> <opts[0]> <list [0]>
+#4 simple_neural_network_vl <tibble [1 × 4]> <opts[0]> <list [0]>
+sim_wfl_vl |> extract_workflow(id = "simple_SVM_poly_vl")
+# ══ Workflow ════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 # Preprocessor: Recipe
 # Model: svm_poly()
 # 
-# ── Preprocessor ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-# 2 Recipe Steps
+# ── Preprocessor ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# 0 Recipe Steps
 # 
-# • step_log()
-# • step_normalize()
-# 
-# ── Model ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# ── Model ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # Polynomial Support Vector Machine Model Specification (regression)
 # 
 # Main Arguments:
 #   cost = tune()
 # degree = tune()
-# scale_factor = tune()
-# margin = tune()
 # 
 # Computational engine: kernlab 
-norm_wfl_vl <- norm_wfl_vl |>
-  option_add(param_info = nnet_param, id = "normalized_neural_network_vl")
-norm_wfl_vl
+sim_wfl_vl <- sim_wfl_vl |>
+  option_add(param_info = nnet_param, id = "simple_neural_network_vl")
+sim_wfl_vl
 ## A workflow set/tibble: 4 × 4
-#  wflow_id                     info             option    result    
-#  <chr>                        <list>           <list>    <list>    
-#1 normalized_SVM_radial_vl     <tibble [1 × 4]> <opts[0]> <list [0]>
-#2 normalized_SVM_poly_vl       <tibble [1 × 4]> <opts[0]> <list [0]>
-#3 normalized_KNN_vl            <tibble [1 × 4]> <opts[0]> <list [0]>
-#4 normalized_neural_network_vl <tibble [1 × 4]> <opts[1]> <list [0]>
+#  wflow_id                 info             option    result    
+#  <chr>                    <list>           <list>    <list>    
+#1 simple_SVM_radial_vl     <tibble [1 × 4]> <opts[0]> <list [0]>
+#2 simple_SVM_poly_vl       <tibble [1 × 4]> <opts[0]> <list [0]>
+#3 simple_KNN_vl            <tibble [1 × 4]> <opts[0]> <list [0]>
+#4 simple_neural_network_vl <tibble [1 × 4]> <opts[1]> <list [0]>
 
 model_vars_cd <- workflow_variables(outcomes = cd_2022, 
                                     predictors = everything())
@@ -270,21 +263,21 @@ no_pre_proc_cd
 model_vars_vl <- workflow_variables(outcomes = vl_2022, 
                                     predictors = everything())
 no_pre_proc_vl <- workflow_set(
-  preproc = list(simple = model_vars_vl), 
+  preproc = list(simpvar = model_vars_vl), 
   models = list(MARS_vl = mars_spec, CART_vl = cart_spec, 
                 CART_bagged_vl = bag_cart_spec, RF_vl = rf_spec, 
                 boosting_vl = xgb_spec, Cubist_vl = cubist_spec)
   )
 no_pre_proc_vl
 ## A workflow set/tibble: 6 × 4
-#  wflow_id              info             option    result    
-#  <chr>                 <list>           <list>    <list>    
-#1 simple_MARS_vl        <tibble [1 × 4]> <opts[0]> <list [0]>
-#2 simple_CART_vl        <tibble [1 × 4]> <opts[0]> <list [0]>
-#3 simple_CART_bagged_vl <tibble [1 × 4]> <opts[0]> <list [0]>
-#4 simple_RF_vl          <tibble [1 × 4]> <opts[0]> <list [0]>
-#5 simple_boosting_vl    <tibble [1 × 4]> <opts[0]> <list [0]>
-#6 simple_Cubist_vl      <tibble [1 × 4]> <opts[0]> <list [0]>
+#  wflow_id               info             option    result    
+#  <chr>                  <list>           <list>    <list>    
+#1 simpvar_MARS_vl        <tibble [1 × 4]> <opts[0]> <list [0]>
+#2 simpvar_CART_vl        <tibble [1 × 4]> <opts[0]> <list [0]>
+#3 simpvar_CART_bagged_vl <tibble [1 × 4]> <opts[0]> <list [0]>
+#4 simpvar_RF_vl          <tibble [1 × 4]> <opts[0]> <list [0]>
+#5 simpvar_boosting_vl    <tibble [1 × 4]> <opts[0]> <list [0]>
+#6 simpvar_Cubist_vl      <tibble [1 × 4]> <opts[0]> <list [0]>
 
 with_features_cd <- workflow_set(
   preproc = list(full_quad = poly_cd), 
@@ -316,8 +309,8 @@ all_workflows_cd
 #11 full_quad_linear_reg_cd <tibble [1 × 4]> <opts[0]> <list [0]>
 #12 full_quad_KNN_cd        <tibble [1 × 4]> <opts[0]> <list [0]>
 
-all_workflows_vl <- bind_rows(no_pre_proc_vl, norm_wfl_vl, with_features_vl) |> 
-  mutate(wflow_id = gsub("(simple_)|(normalized_)", "", wflow_id))
+all_workflows_vl <- bind_rows(no_pre_proc_vl, sim_wfl_vl, with_features_vl) |> 
+  mutate(wflow_id = gsub("(simple_)|(simpvar_)", "", wflow_id))
 all_workflows_vl
 ## A workflow set/tibble: 12 × 4
 #  wflow_id                info             option    result    
@@ -372,18 +365,18 @@ grid_results_cd |>
   filter(.metric == "rmse") |> 
   select(model, .config, rmse = mean, rank)
 ## A tibble: 23 × 4
-#   model         .config                  rmse  rank
-#   <chr>         <chr>                   <dbl> <int>
-# 1 mars          Preprocessor1_Model2  0.00105     1
-# 2 cubist_rules  Preprocessor1_Model2 48.8         2
-# 3 cubist_rules  Preprocessor1_Model1 49.6         3
-# 4 svm_poly      Preprocessor1_Model1 60.5         4
-# 5 bag_tree      Preprocessor1_Model1 61.3         5
-# 6 decision_tree Preprocessor1_Model1 64.9         6
-# 7 rand_forest   Preprocessor1_Model1 77.0         7
-# 8 mlp           Preprocessor1_Model2 86.7         8
-# 9 svm_poly      Preprocessor1_Model2 89.6         9
-#10 decision_tree Preprocessor1_Model2 93.7        10
+#   model        .config                  rmse  rank
+#   <chr>        <chr>                   <dbl> <int>
+# 1 mars         Preprocessor1_Model2 0.000154     1
+# 2 cubist_rules Preprocessor1_Model2 0.222        2
+# 3 mlp          Preprocessor1_Model2 0.232        3
+# 4 cubist_rules Preprocessor1_Model1 0.239        4
+# 5 mlp          Preprocessor1_Model1 0.360        5
+# 6 mars         Preprocessor1_Model1 0.366        6
+# 7 svm_poly     Preprocessor1_Model1 0.457        7
+# 8 rand_forest  Preprocessor1_Model1 0.487        8
+# 9 bag_tree     Preprocessor1_Model1 0.512        9
+#10 rand_forest  Preprocessor1_Model2 0.616       10
 ## ℹ 13 more rows
 ## ℹ Use `print(n = ...)` to see more rows
 
@@ -392,18 +385,18 @@ grid_results_cd |>
   filter(.metric == "rsq") |> 
   select(model, .config, rsq = mean, rank)
 ## A tibble: 23 × 4
-#   model         .config                rsq  rank
-#   <chr>         <chr>                <dbl> <int>
-# 1 mars          Preprocessor1_Model2 1         1
-# 2 cubist_rules  Preprocessor1_Model2 0.903     2
-# 3 cubist_rules  Preprocessor1_Model1 0.906     3
-# 4 svm_poly      Preprocessor1_Model1 0.938     4
-# 5 bag_tree      Preprocessor1_Model1 0.916     5
-# 6 decision_tree Preprocessor1_Model1 0.915     6
-# 7 rand_forest   Preprocessor1_Model1 0.856     7
-# 8 mlp           Preprocessor1_Model2 0.879     8
-# 9 svm_poly      Preprocessor1_Model2 0.912     9
-#10 decision_tree Preprocessor1_Model2 0.972    10
+#   model        .config                rsq  rank
+#   <chr>        <chr>                <dbl> <int>
+# 1 mars         Preprocessor1_Model2 1.00      1
+# 2 cubist_rules Preprocessor1_Model2 0.943     2
+# 3 mlp          Preprocessor1_Model2 0.981     3
+# 4 cubist_rules Preprocessor1_Model1 0.950     4
+# 5 mlp          Preprocessor1_Model1 0.930     5
+# 6 mars         Preprocessor1_Model1 0.930     6
+# 7 svm_poly     Preprocessor1_Model1 0.935     7
+# 8 rand_forest  Preprocessor1_Model1 0.914     8
+# 9 bag_tree     Preprocessor1_Model1 0.889     9
+#10 rand_forest  Preprocessor1_Model2 0.891    10
 ## ℹ 13 more rows
 ## ℹ Use `print(n = ...)` to see more rows
 
@@ -412,9 +405,9 @@ autoplot(
   rank_metric = "rmse",  # <- how to order models
   metric = "rmse",       # <- which metric to visualize
   select_best = TRUE     # <- one point per workflow
-) +
-  geom_text(aes(y = mean - 100, label = wflow_id), angle = 90, hjust = 1) +
-  lims(y = c(-150, 350)) #+
+  ) +
+  geom_text(aes(y = mean - 1, label = wflow_id), angle = 90, hjust = 1) +
+  lims(y = c(-2, 5/2)) #+
   #theme(legend.position = "none")
 
 autoplot(
@@ -422,9 +415,9 @@ autoplot(
   rank_metric = "rsq", 
   metric = "rsq",       
   select_best = TRUE     
-) +
+  ) +
   geom_text(aes(y = mean - 1/6, label = wflow_id), angle = 90, hjust = 1) +
-  lims(y = c(1/2, 1))
+  lims(y = c(4/10, 1))
 
 autoplot(grid_results_cd, id = "MARS_cd", metric = "rmse")
 
@@ -454,6 +447,66 @@ grid_results_vl
 #11 full_quad_linear_reg_vl <tibble [1 × 4]> <opts[3]> <tune[x]>
 #12 full_quad_KNN_vl        <tibble [1 × 4]> <opts[3]> <tune[x]>
 
+grid_results_vl |> 
+  rank_results() |> 
+  filter(.metric == "rmse") |> 
+  select(model, .config, rmse = mean, rank)
+## A tibble: 23 × 4
+#   model            .config               rmse  rank
+#   <chr>            <chr>                <dbl> <int>
+# 1 cubist_rules     Preprocessor1_Model1 0.528     1
+# 2 cubist_rules     Preprocessor1_Model2 0.583     2
+# 3 bag_tree         Preprocessor1_Model1 0.607     3
+# 4 decision_tree    Preprocessor1_Model1 0.627     4
+# 5 rand_forest      Preprocessor1_Model2 0.627     5
+# 6 decision_tree    Preprocessor1_Model2 0.649     6
+# 7 nearest_neighbor Preprocessor1_Model2 0.768     7
+# 8 nearest_neighbor Preprocessor1_Model2 0.870     8
+# 9 nearest_neighbor Preprocessor1_Model1 0.886     9
+#10 nearest_neighbor Preprocessor1_Model1 0.887    10
+## ℹ 13 more rows
+## ℹ Use `print(n = ...)` to see more rows
+
+grid_results_vl |> 
+  rank_results() |> 
+  filter(.metric == "rsq") |> 
+  select(model, .config, rmse = mean, rank)
+## A tibble: 23 × 4
+#   model            .config               rmse  rank
+#   <chr>            <chr>                <dbl> <int>
+# 1 cubist_rules     Preprocessor1_Model1 0.878     1
+# 2 cubist_rules     Preprocessor1_Model2 0.877     2
+# 3 bag_tree         Preprocessor1_Model1 0.887     3
+# 4 decision_tree    Preprocessor1_Model1 0.864     4
+# 5 rand_forest      Preprocessor1_Model2 0.838     5
+# 6 decision_tree    Preprocessor1_Model2 0.863     6
+# 7 nearest_neighbor Preprocessor1_Model2 0.746     7
+# 8 nearest_neighbor Preprocessor1_Model2 0.689     8
+# 9 nearest_neighbor Preprocessor1_Model1 0.779     9
+#10 nearest_neighbor Preprocessor1_Model1 0.723    10
+## ℹ 13 more rows
+## ℹ Use `print(n = ...)` to see more rows
+
+autoplot(
+  grid_results_vl,
+  rank_metric = "rmse",  
+  metric = "rmse",       
+  select_best = TRUE  
+  ) 
+
+autoplot(
+  grid_results_vl,
+  rank_metric = "rsq", 
+  metric = "rsq",       
+  select_best = TRUE     
+) +
+  geom_text(aes(y = mean - 1/6, label = wflow_id), angle = 90, hjust = 1) +
+  lims(y = c(4/10, 1))
+
+autoplot(grid_results_vl, id = "MARS_vl", metric = "rmse")
+
+autoplot(grid_results_vl, id = "MARS_vl", metric = "rsq")
+
 
 ## Racing
 library(finetune)
@@ -471,22 +524,15 @@ race_results_cd <- all_workflows_cd |>
     grid = 2,
     control = race_ctrl
   )
-race_results_cd
-## A workflow set/tibble: 12 × 4
-#   wflow_id                info             option    result        
-#   <chr>                   <list>           <list>    <list>        
-# 1 MARS_cd                 <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-# 2 CART_cd                 <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-# 3 CART_bagged_cd          <tibble [1 × 4]> <opts[3]> <rsmp[+]>     
-# 4 RF_cd                   <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-# 5 boosting_cd             <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-# 6 Cubist_cd               <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-# 7 SVM_radial_cd           <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-# 8 SVM_poly_cd             <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-# 9 KNN_cd                  <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-#10 neural_network_cd       <tibble [1 × 4]> <opts[4]> <try-errr [1]>
-#11 full_quad_linear_reg_cd <tibble [1 × 4]> <opts[3]> <try-errr [1]>
-#12 full_quad_KNN_cd        <tibble [1 × 4]> <opts[3]> <try-errr [1]>
+
+race_results_vl <- all_workflows_vl |>
+  workflow_map(
+    "tune_race_anova",
+    seed = 1508,
+    resamples = cd_folds,
+    grid = 20,
+    control = race_ctrl
+  )
 
 
 ## Selection
@@ -508,7 +554,7 @@ collect_metrics(MARS_test_results_cd)
 ## A tibble: 2 × 4
 #  .metric .estimator .estimate .config             
 #  <chr>   <chr>          <dbl> <chr>               
-#1 rmse    standard    6.07e-14 Preprocessor1_Model1
+#1 rmse    standard    2.10e-16 Preprocessor1_Model1
 #2 rsq     standard    1   e+ 0 Preprocessor1_Model1
 
 MARS_test_results_cd |> 
@@ -518,3 +564,33 @@ MARS_test_results_cd |>
   geom_point() + 
   coord_obs_pred() + 
   labs(x = "observed", y = "predicted")
+
+best_results_vl <- grid_results_vl |> 
+  extract_workflow_set_result("Cubist_vl") |> 
+  select_best(metric = "rmse")
+best_results_vl
+## A tibble: 1 × 3
+#  committees neighbors .config             
+#       <int>     <int> <chr>               
+#1         34         6 Preprocessor1_Model1
+
+Cubist_test_results_vl <- grid_results_vl |> 
+  extract_workflow("Cubist_vl") |> 
+  finalize_workflow(best_results_vl) |> 
+  last_fit(split = vl_split)
+
+collect_metrics(Cubist_test_results_vl)
+## A tibble: 2 × 4
+#  .metric .estimator .estimate .config             
+#  <chr>   <chr>          <dbl> <chr>               
+#1 rmse    standard       0.675 Preprocessor1_Model1
+#2 rsq     standard       0.636 Preprocessor1_Model1
+
+Cubist_test_results_vl |> 
+  collect_predictions() |> 
+  ggplot(aes(x = vl_2022, y = .pred)) + 
+  geom_abline(color = "gray50", lty = 2) + 
+  geom_point() + 
+  coord_obs_pred() + 
+  labs(x = "observed", y = "predicted")
+
