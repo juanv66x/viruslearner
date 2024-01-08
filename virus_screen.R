@@ -22,6 +22,8 @@ glimpse(viral)
 
 
 ## Variables transformation
+library(FactoMineR)
+res_pca <- PCA(viral, graph = FALSE)
 library(tidyverse)
 recovery_rates <- viral |>
   mutate(
@@ -32,7 +34,7 @@ recovery_rates <- viral |>
     viral_rate_2022 = (vl_2022 - vl_2021) / (vl_2021+1),
     viral_rate_2022_2yr = (vl_2022 - vl_2019) / (vl_2019+1)
   ) |>
-  mutate_all(~ . + 1)
+  mutate_all(~ . + 1) 
 glimpse(recovery_rates)
 # Rows: 35
 # Columns: 12
@@ -52,7 +54,8 @@ glimpse(recovery_rates)
 
 ## Data spending
 cd_split <- initial_split(recovery_rates |> 
-                            mutate_at("cd_2022", ~(scale(., center = TRUE, scale = TRUE) |> as.vector()))
+                            mutate_at("cd_2022", ~(scale(., center = TRUE, scale = TRUE) |> as.vector())) |>
+                            bind_cols(res_pca$ind$coord)
                           )
 cd_train <- training(cd_split)
 cd_test  <- testing(cd_split)
@@ -62,7 +65,8 @@ cd_folds <- vfold_cv(cd_train, repeats = 5)
 set.seed(1503)
 vl_split <- initial_split(recovery_rates |> 
                             mutate(vl_2022 = log10(vl_2022)) |>
-                            mutate_at('vl_2022', ~(scale(.) |> as.vector()))
+                            mutate_at('vl_2022', ~(scale(.) |> as.vector())) |>
+                            bind_cols(res_pca$ind$coord)
                           )
 vl_train <- training(vl_split)
 vl_test  <- testing(vl_split)
