@@ -53,6 +53,7 @@ glimpse(recovery_rates)
 
 
 ## Data spending
+set.seed(1501)
 cd_split <- initial_split(recovery_rates |> 
                             mutate_at("cd_2022", ~(scale(., center = TRUE, scale = TRUE) |> as.vector())) |>
                             bind_cols(res_pca$ind$coord)
