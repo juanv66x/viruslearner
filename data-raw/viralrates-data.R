@@ -18,7 +18,6 @@ recovery_rates <- viral |>
   mutate_all(~ . + 1) 
 
 viralrates <- recovery_rates |> 
-  mutate_at("cd_2022", ~(scale(., center = TRUE, scale = TRUE) |> as.vector())) |>
   bind_cols(res_pca$ind$coord) |>
   rename_with(function(x){gsub("Dim.","adherence_",x)})
 
