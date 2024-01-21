@@ -2,7 +2,7 @@
 % Please edit documentation in R/vl_stack.R
 \name{vl_stack}
 \alias{vl_stack}
-\title{Viral load stacking}
+\title{Viral load plot of blending coefficients for the stacking ensemble}
 \usage{
 vl_stack(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
 }
@@ -22,11 +22,12 @@ vl_stack(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
 \item{gridsize}{Size of the grid for hyperparameter tuning.}
 }
 \value{
-A data stack with multiple model definitions and candidate members.
+A plot of a data stack with multiple model definitions and candidate members.
 }
 \description{
-Ensemble learning through stacking of models and grid search for tuning
-hyperparameters of viral load outcomes.
+A plot of the contribution of each model obtained using ensemble learning
+through stacking of models and grid search for tuning hyperparameters of
+viral load outcomes.
 }
 \examples{
 \dontrun{

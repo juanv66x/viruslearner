@@ -1,7 +1,8 @@
-#' Viral load stacking
+#' Viral load plot of blending coefficients for the stacking ensemble
 #' 
-#' Ensemble learning through stacking of models and grid search for tuning 
-#' hyperparameters of viral load outcomes.
+#' A plot of the contribution of each model obtained using ensemble learning 
+#' through stacking of models and grid search for tuning hyperparameters of 
+#' viral load outcomes.
 #'
 #' @param outcome The outcome variable name (viral load). 
 #' @param traindata The training data set.
@@ -11,7 +12,7 @@
 #' @param repetitions Number of repetitions for cross-validation.
 #' @param gridsize Size of the grid for hyperparameter tuning.
 #'
-#' @return A data stack with multiple model definitions and candidate members.
+#' @return A plot of a data stack with multiple model definitions and candidate members.
 #' @export
 #'
 #' @examples
@@ -91,5 +92,7 @@ vl_stack <- function(outcome, traindata, viralvars, logbase, seed, repetitions, 
             save_workflow = TRUE
             )
           )
-    )
+    ) |>
+    stacks::blend_predictions(penalty = 10^seq(-2, -0.5, length = 20)) |>
+    stacks::autoplot("weights")
   }

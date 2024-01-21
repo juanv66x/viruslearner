@@ -2,7 +2,7 @@
 % Please edit documentation in R/cd_stack.R
 \name{cd_stack}
 \alias{cd_stack}
-\title{CD4 cell count stacking}
+\title{CD4 cell count plot of blending coefficients for the stacking ensemble}
 \usage{
 cd_stack(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
 }
@@ -22,11 +22,12 @@ cd_stack(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
 \item{gridsize}{Size of the grid for hyperparameter tuning.}
 }
 \value{
-A data stack with multiple model definitions and candidate members.
+A plot of a data stack with multiple model definitions and candidate members.
 }
 \description{
-Ensemble learning through stacking of models and grid search for tuning
-hyperparameters of CD4 cell count outcomes.
+A plot of the contribution of each model obtained using ensemble learning
+through stacking of models and grid search for tuning hyperparameters of CD4
+cell count outcomes.
 }
 \examples{
 \dontrun{

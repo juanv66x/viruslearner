@@ -1,4 +1,4 @@
-test_that("`vl_stack()` works as expected", {
+test_that("`vl_stack()` plots as expected", {
   local_edition(3)
   library(baguette)
   library(dials)
@@ -15,6 +15,7 @@ test_that("`vl_stack()` works as expected", {
   library(stats)
   library(tidyselect)
   library(tune)
+  library(vdiffr)
   library(workflows)
   library(workflowsets)
   outcome <- "vl_2023"
@@ -24,10 +25,9 @@ test_that("`vl_stack()` works as expected", {
   seed <- 1502
   repetitions <- 2
   gridsize <- 1
-  expect_snapshot(
-    print(
-      vl_stack(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
-    )
+  expect_doppelganger(
+    title = "vl stack",
+    fig = vl_stack(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize),
   )
 }
 )

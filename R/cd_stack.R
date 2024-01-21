@@ -1,7 +1,8 @@
-#' CD4 cell count stacking
+#' CD4 cell count plot of blending coefficients for the stacking ensemble 
 #' 
-#' Ensemble learning through stacking of models and grid search for tuning 
-#' hyperparameters of CD4 cell count outcomes.
+#' A plot of the contribution of each model obtained using ensemble learning 
+#' through stacking of models and grid search for tuning hyperparameters of CD4 
+#' cell count outcomes. 
 #'
 #' @param outcome The outcome variable name (CD4 cell count). 
 #' @param traindata The training data set.
@@ -11,7 +12,7 @@
 #' @param repetitions Number of repetitions for cross-validation.
 #' @param gridsize Size of the grid for hyperparameter tuning.
 #'
-#' @return A data stack with multiple model definitions and candidate members.
+#' @return A plot of a data stack with multiple model definitions and candidate members.
 #' @export
 #' 
 #' @examples
@@ -91,5 +92,7 @@ cd_stack <- function(outcome, traindata, viralvars, logbase, seed, repetitions, 
             save_workflow = TRUE
           )
         )
-    )
+    ) |>
+    stacks::blend_predictions(penalty = 10^seq(-2, -0.5, length = 20)) |>
+    stacks::autoplot("weights")
   }
