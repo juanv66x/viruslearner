@@ -2,7 +2,7 @@ Package: viruslearner
 Title: Ensemble Learning for HIV-Related Metrics
 Version: 0.0.0.9000
 Authors@R: 
-    person("Juan Pablo", "Acuña González", , "22253567@uagro.mx", role = c("aut", "cre"),
+    person("Juan Pablo", "Acuña González", , "22253567@uagro.mx", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0003-6029-6560"))
 Description: Advanced statistical modeling techniques for ensemble learning, specifically tailored to the analysis of lymphocyte counts and viral load data in the context of HIV research. Empowering researchers and practitioners, this tool provides a comprehensive solution for tasks such as analysis, prediction and risk calculation related to key viral metrics. The package incorporates cutting-edge ensemble learning principles, inspired by model stacking techniques and adhering to tidy data principles, offering a robust and reproducible framework for HIV research.
 License: MIT + file LICENSE
