@@ -1,6 +1,6 @@
 Package: viruslearner
 Title: Ensemble Learning for HIV-Related Metrics
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person("Juan Pablo", "Acuña González", , "22253567@uagro.mx", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0003-6029-6560"))
@@ -11,6 +11,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Suggests: 
     baguette,
+    generics,
     kernlab,
     kknn,
     knitr,
@@ -23,7 +24,6 @@ Config/testthat/edition: 3
 Depends: 
     R (>= 2.10)
 LazyData: true
-VignetteBuilder: knitr
 Imports: 
     dials,
     dplyr,
