@@ -34,11 +34,11 @@ A data frame with 65 rows and 21 variables:
 cd_train
 }
 \description{
-The dataset contains information about patients, specifically
-their CD4 T cell counts (cd_2018, cd_2019, cd_2021, cd_2022, cd_2023) and
-viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling patient
-recovery, column \code{cd_2023} is identified as the outcome variable. The dataset
-also contains information about variables related to adherence to
+This training dataset contains information about patients,
+specifically their CD4 T cell counts (cd_2018, cd_2019, cd_2021, cd_2022,
+cd_2023) and viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling
+patient recovery, column \code{cd_2023} is identified as the outcome variable.
+The dataset also contains information about variables related to adherence to
 antiretroviral therapy (ART).
 }
 \examples{

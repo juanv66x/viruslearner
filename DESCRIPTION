@@ -36,4 +36,5 @@ Imports:
     tidyselect,
     tune,
     workflows,
-    workflowsets
+    workflowsets,
+    yardstick
