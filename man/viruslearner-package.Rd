@@ -19,5 +19,12 @@ Useful links:
 \author{
 \strong{Maintainer}: Juan Pablo Acuña González \email{22253567@uagro.mx} (\href{https://orcid.org/0009-0003-6029-6560}{ORCID}) [copyright holder]
 
+Authors:
+\itemize{
+  \item María de los Ángeles Salgado Jiménez \email{ansaji83@gmail.com} (\href{https://orcid.org/0000-0003-3078-9156}{ORCID})
+  \item Baltazar Joanico Morales (\href{https://orcid.org/0000-0001-5001-5647}{ORCID})
+  \item Juan Villagómez Méndez (\href{https://orcid.org/0000-0001-8385-8624}{ORCID})
+}
+
 }
 \keyword{internal}
