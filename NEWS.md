@@ -1,3 +1,3 @@
-# viruslearner (development version)
+# viruslearner 0.0.1
 
 * Initial CRAN submission.
