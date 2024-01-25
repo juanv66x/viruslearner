@@ -3,6 +3,3 @@
 export(cd_ens)
 export(cd_fit)
 export(cd_stack)
-export(vl_ens)
-export(vl_fit)
-export(vl_stack)

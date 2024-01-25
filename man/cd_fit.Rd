@@ -2,7 +2,7 @@
 % Please edit documentation in R/cd_fit.R
 \name{cd_fit}
 \alias{cd_fit}
-\title{Fit and Evaluate Stacked Ensemble Model for CD4 Cell Count Outcome}
+\title{Fit and Evaluate Stacked Ensemble Model for CD4 Cell Count or Viral Load Outcome}
 \usage{
 cd_fit(
   outcome,
@@ -42,7 +42,12 @@ A tibble containing the root mean squared error (RMSE) and coefficient of determ
 This function builds a stacked ensemble model using various preprocessing and modeling workflows.
 }
 \examples{
-\dontrun{
+\donttest{
+library(baguette)
+library(kernlab)
+library(kknn)
+library(ranger)
+library(rules)
 outcome <- "cd_2023"
 traindata <- cd_train
 viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")

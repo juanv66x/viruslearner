@@ -1,8 +1,8 @@
-#' CD4 cell count plot of blending coefficients for the stacking ensemble 
+#' CD4 Cell Count or Viral Load Plot of Blending Coefficients for the Stacking Ensemble 
 #' 
 #' A plot of the contribution of each model obtained using ensemble learning 
 #' through stacking of models and grid search for tuning hyperparameters of CD4 
-#' cell count outcomes. 
+#' cell count or viral load outcomes. 
 #'
 #' @param outcome The outcome variable name (CD4 cell count). 
 #' @param traindata The training data set.
@@ -16,7 +16,12 @@
 #' @export
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' library(baguette)
+#' library(kernlab)
+#' library(kknn)
+#' library(ranger)
+#' library(rules)
 #' outcome <- "cd_2023"
 #' traindata <- cd_train
 #' viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")

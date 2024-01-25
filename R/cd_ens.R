@@ -1,4 +1,4 @@
-#' CD4 cell count ensemble learning through stacking of models.
+#' CD4 Cell Count or Viral Load Ensemble Learning Through Stacking of Models.
 #'
 #' Stacking ensemble approach to combine predictions from various models, 
 #' allowing for grid search of tuning hyperparameters. 
@@ -15,7 +15,12 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' library(baguette)
+#' library(kernlab)
+#' library(kknn)
+#' library(ranger)
+#' library(rules)
 #' outcome <- "cd_2023"
 #' traindata <- cd_train
 #' viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")
