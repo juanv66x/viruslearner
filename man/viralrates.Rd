@@ -44,11 +44,12 @@ contains information about variables related to adherence to antiretroviral
 therapy (ART).
 }
 \examples{
-\dontrun{
+\donttest{
   # Load the dataset
   data("viralrates", package = "viruslearner")
   # Explore the dataset
-  glimpse(viralrates)
+  library(dplyr)
+  dplyr::glimpse(viralrates)
 }
 }
 \keyword{datasets}

@@ -42,11 +42,12 @@ identified as the outcome variable. The dataset also contains information
 about variables related to adherence to antiretroviral therapy (ART).
 }
 \examples{
-\dontrun{
+\donttest{
   # Load the dataset
   data("vl_test", package = "viruslearner")
   # Explore the dataset
-  glimpse(vl_test)
+  library(dplyr)
+  dplyr::glimpse(vl_test)
 }
 }
 \keyword{datasets}

@@ -34,11 +34,12 @@
 #'   \item{adherence_5}{Fifth principal component analysis scores representing adherence to ART.}
 #' }
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   # Load the dataset
 #'   data("viralrates", package = "viruslearner")
 #'   # Explore the dataset
-#'   glimpse(viralrates)
+#'   library(dplyr)
+#'   dplyr::glimpse(viralrates)
 #' }
 "viralrates"
 
@@ -77,11 +78,12 @@
 #'   \item{adherence_5}{Fifth principal component analysis scores representing adherence to ART.}
 #' }
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   # Load the dataset
 #'   data("cd_train", package = "viruslearner")
 #'   # Explore the dataset
-#'   glimpse(cd_train)
+#'   library(dplyr)
+#'   dplyr::glimpse(cd_train)
 #' }
 "cd_train"
 
@@ -120,11 +122,12 @@
 #'   \item{adherence_5}{Fifth principal component analysis scores representing adherence to ART.}
 #' }
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   # Load the dataset
 #'   data("vl_train", package = "viruslearner")
 #'   # Explore the dataset
-#'   glimpse(vl_train)
+#'   library(dplyr)
+#'   dplyr::glimpse(vl_train)
 #' }
 "vl_train"
 
@@ -163,11 +166,12 @@
 #'   \item{adherence_5}{Fifth principal component analysis scores representing adherence to ART.}
 #' }
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   # Load the dataset
 #'   data("cd_test", package = "viruslearner")
 #'   # Explore the dataset
-#'   glimpse(cd_test)
+#'   library(dplyr)
+#'   dplyr::glimpse(cd_test)
 #' }
 "cd_test"
 
@@ -206,10 +210,11 @@
 #'   \item{adherence_5}{Fifth principal component analysis scores representing adherence to ART.}
 #' }
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   # Load the dataset
 #'   data("vl_test", package = "viruslearner")
 #'   # Explore the dataset
-#'   glimpse(vl_test)
+#'   library(dplyr)
+#'   dplyr::glimpse(vl_test)
 #' }
 "vl_test"

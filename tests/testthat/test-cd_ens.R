@@ -17,6 +17,7 @@ test_that("`cd_ens()` works as expected", {
   library(tune)
   library(workflows)
   library(workflowsets)
+  data("cd_train", package = "viruslearner")
   outcome <- "cd_2023"
   traindata <- cd_train
   viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")

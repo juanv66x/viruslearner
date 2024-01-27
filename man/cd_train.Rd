@@ -42,11 +42,12 @@ The dataset also contains information about variables related to adherence to
 antiretroviral therapy (ART).
 }
 \examples{
-\dontrun{
+\donttest{
   # Load the dataset
   data("cd_train", package = "viruslearner")
   # Explore the dataset
-  glimpse(cd_train)
+  library(dplyr)
+  dplyr::glimpse(cd_train)
 }
 }
 \keyword{datasets}

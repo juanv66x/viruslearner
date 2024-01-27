@@ -18,6 +18,8 @@ test_that("cd_fit()` works as expected", {
   library(workflows)
   library(workflowsets)
   library(yardstick)
+  data("cd_train", package = "viruslearner")
+  data("cd_test", package = "viruslearner")
   outcome <- "cd_2023"
   traindata <- cd_train
   viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")
