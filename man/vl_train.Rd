@@ -39,7 +39,8 @@ specifically their CD4 T cell counts (cd_2018, cd_2019, cd_2021, cd_2022,
 cd_2023) and viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling
 patient viral load persistence or suppression, column \code{vl_2023} is
 identified as the outcome variable. The dataset also contains information
-about variables related to adherence to antiretroviral therapy (ART).
+about variables related to adherence to antiretroviral therapy (ART) and cell
+recovery and viral change rates.
 }
 \examples{
 \donttest{

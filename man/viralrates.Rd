@@ -41,7 +41,7 @@ recovery and viral load persistence or suppression, column \code{cd_2023} is
 identified as the outcome variable for CD4 cell counts, and column \code{vl_2023}
 is identified as the outcome variable for viral load. The dataset also
 contains information about variables related to adherence to antiretroviral
-therapy (ART).
+therapy (ART) and cell recovery and viral change rates.
 }
 \examples{
 \donttest{

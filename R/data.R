@@ -5,9 +5,41 @@
 #' viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling patient 
 #' recovery and viral load persistence or suppression, column `cd_2023` is 
 #' identified as the outcome variable for CD4 cell counts, and column `vl_2023` 
+#' is identified as the outcome variable for viral load. 
+#'
+#' @format A data frame with 87 rows and 21 variables:
+#' \describe{
+#'   \item{cd_2018}{CD4 count in 2018.}
+#'   \item{cd_2019}{CD4 count in 2019.}
+#'   \item{vl_2019}{Viral load in 2019.}
+#'   \item{cd_2021}{CD4 count in 2021.}
+#'   \item{vl_2021}{Viral load in 2021.}
+#'   \item{cd_2022}{CD4 count in 2022.}
+#'   \item{vl_2022}{Viral load in 2022.}
+#'   \item{cd_2023}{CD4 count in 2023.}
+#'   \item{vl_2023}{Viral load in 2023.}
+#' }
+#' @examples
+#' \donttest{
+#'   # Load the dataset
+#'   data("viral_new", package = "viruslearner")
+#'   # Explore the dataset
+#'   library(dplyr)
+#'   dplyr::glimpse(viral_new)
+#' }
+"viral_new"
+
+
+#' Viral Rates Dataset
+#'
+#' @description The dataset contains information about patients, specifically 
+#' their CD4 T cell counts (cd_2018, cd_2019, cd_2021, cd_2022, cd_2023) and 
+#' viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling patient 
+#' recovery and viral load persistence or suppression, column `cd_2023` is 
+#' identified as the outcome variable for CD4 cell counts, and column `vl_2023` 
 #' is identified as the outcome variable for viral load. The dataset also 
 #' contains information about variables related to adherence to antiretroviral 
-#' therapy (ART).
+#' therapy (ART) and cell recovery and viral change rates.
 #'
 #' @format A data frame with 87 rows and 21 variables:
 #' \describe{
@@ -51,7 +83,7 @@
 #' cd_2023) and viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling 
 #' patient recovery, column `cd_2023` is identified as the outcome variable. 
 #' The dataset also contains information about variables related to adherence to 
-#' antiretroviral therapy (ART).
+#' antiretroviral therapy (ART) and cell recovery and viral change rates.
 #'
 #' @format A data frame with 65 rows and 21 variables:
 #' \describe{
@@ -95,7 +127,8 @@
 #' cd_2023) and viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling 
 #' patient viral load persistence or suppression, column `vl_2023` is 
 #' identified as the outcome variable. The dataset also contains information 
-#' about variables related to adherence to antiretroviral therapy (ART).
+#' about variables related to adherence to antiretroviral therapy (ART) and cell 
+#' recovery and viral change rates.
 #'
 #' @format A data frame with 65 rows and 21 variables:
 #' \describe{
@@ -139,7 +172,7 @@
 #' cd_2023) and viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling 
 #' patient recovery, column `cd_2023` is identified as the outcome variable. 
 #' The dataset also contains information about variables related to adherence to 
-#' antiretroviral therapy (ART).
+#' antiretroviral therapy (ART) and cell recovery and viral change rates.
 #'
 #' @format A data frame with 22 rows and 21 variables:
 #' \describe{
@@ -183,7 +216,8 @@
 #' cd_2023) and viral loads (vl_2019, vl_2021, vl_2022, vl_2023). For modeling 
 #' patient viral load persistence or suppression, column `vl_2023` is 
 #' identified as the outcome variable. The dataset also contains information 
-#' about variables related to adherence to antiretroviral therapy (ART).
+#' about variables related to adherence to antiretroviral therapy (ART) and cell 
+#' recovery and viral change rates.
 #'
 #' @format A data frame with 22 rows and 21 variables:
 #' \describe{
