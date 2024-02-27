@@ -31,12 +31,12 @@ library(viruslearner)
 
 ```{r coords, message=FALSE}
 library(FactoMineR)
-data(viral_new)
+data(viral_new, package = "viruslearner")
 res_pca <- PCA(viral_new, graph = FALSE)
 print(res_pca)
 ```
 
-To look at the data in PC coordinates requires combinining the PC coordinates with the original dataset. This is done via the `res_pca$ind$coord` object. The columns containing the fitted coordinates are called `Dim.1`, `Dim.2`, etc.
+To look at the data in PC coordinates requires combining the PC coordinates with the original dataset. This is done via the `res_pca$ind$coord` object. The columns containing the fitted coordinates are called `Dim.1`, `Dim.2`, etc.
 
 The transformation of variables shown in Figure \@ref(fig:plotcoords), in which PCA scores are prognostic factors, reflects the clinical belief that adherence to ART may be affected by the change and other patterns of CD4 counts
 and viral loads over time. The approach uses PCA with data from the entire cohort to extract the primary

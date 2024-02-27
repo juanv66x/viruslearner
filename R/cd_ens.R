@@ -71,7 +71,7 @@ cd_ens <- function(outcome, traindata, viralvars, logbase, seed, repetitions, gr
                                      parsnip::set_mode("regression") |>
                                      tune::extract_parameter_set_dials() |>
                                      recipes::update(hidden_units = dials::hidden_units(c(1, 27))),
-                                   id = "normalized_neural_network_cd"),
+                                   id = "normalized_neural_network"),
         workflowsets::workflow_set(
           preproc = list(full_quad = recipes::recipe(stats::as.formula(paste(outcome, "~ .")), data = traindata) |>
                            recipes::step_log(tidyselect::all_of(viralvars), base = logbase) |>
