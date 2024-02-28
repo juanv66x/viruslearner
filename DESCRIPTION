@@ -26,6 +26,8 @@ Suggests:
     kernlab,
     kknn,
     knitr,
+    nnet,
+    NeuralNetTools,
     ranger,
     rmarkdown,
     rules,
@@ -47,6 +49,7 @@ Imports:
     stats,
     tidyselect,
     tune,
+    vip,
     workflows,
     workflowsets,
     yardstick
