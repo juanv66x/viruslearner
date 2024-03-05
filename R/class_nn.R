@@ -1,4 +1,4 @@
-#' Traina neural network model and plot variable importance
+#' Train a neural network model and plot variable importance
 #'
 #' @param hiv_data HIV data set
 #' @param vip_featured Outcome variable
