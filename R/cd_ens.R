@@ -32,13 +32,12 @@
 #' cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
 #' }
 cd_ens <- function(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize) {
-  set.seed(seed)
   stacks::stacks() |>
     stacks::add_candidates(
       dplyr::bind_rows(
         workflowsets::workflow_set(
           preproc = list(simple = workflows::workflow_variables(outcomes = tidyselect::all_of(outcome), predictors = tidyselect::everything())),
-          models = list(rf_spec = parsnip::rand_forest(mtry = hardhat::tune(), min_n = hardhat::tune(), trees = hardhat::tune()) |> 
+          models = list(rf = parsnip::rand_forest(mtry = hardhat::tune(), min_n = hardhat::tune(), trees = hardhat::tune()) |> 
                           parsnip::set_engine("ranger") |> 
                           parsnip::set_mode("regression"),
                         CART_bagged = parsnip::bag_tree() |>

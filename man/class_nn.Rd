@@ -2,7 +2,7 @@
 % Please edit documentation in R/class_nn.R
 \name{class_nn}
 \alias{class_nn}
-\title{Traina neural network model and plot variable importance}
+\title{Train a neural network model and plot variable importance}
 \usage{
 class_nn(vip_featured, hiv_data, hu, plty, epo)
 }
@@ -21,7 +21,7 @@ class_nn(vip_featured, hiv_data, hu, plty, epo)
 A variable importance plot
 }
 \description{
-Traina neural network model and plot variable importance
+Train a neural network model and plot variable importance
 }
 \examples{
 \donttest{
