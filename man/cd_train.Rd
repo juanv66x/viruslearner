@@ -20,9 +20,18 @@ A data frame with 65 rows and 21 variables:
 \item{recovery_rate_2021}{CD4 count recovery rate from 2019 to 2021.}
 \item{recovery_rate_2022}{CD4 count recovery rate from 2021 to 2022.}
 \item{recovery_rate_2023}{CD4 count recovery rate from 2023 to 2022.}
+\item{rr_2021_2yr}{CD4 count recovery rate from 2018 to 2021.}
+\item{rr_2022_2yr}{CD4 count recovery rate from 2019 to 2022.}
+\item{rr_2023_2yr}{CD4 count recovery rate from 2021 to 2023.}
+\item{rr_2022_3yr}{CD4 count recovery rate from 2018 to 2022.}
+\item{rr_2023_3yr}{CD4 count recovery rate from 2019 to 2023.}
+\item{rr_2023_4yr}{CD4 count recovery rate from 2018 to 2023.}
 \item{viral_rate_2021}{Viral load rate of change from 2019 to 2021 (log10).}
 \item{viral_rate_2022}{Viral load rate of change from 2021 to 2022 (log10).}
 \item{viral_rate_2023}{Viral load rate of change from 2022 to 2023 (log10).}
+\item{vrate_2022_2yr}{Viral load rate of change from 2019 to 2022 (log10).}
+\item{vrate_2023_2yr}{Viral load rate of change from 2021 to 2023 (log10).}
+\item{vrate_2023_3yr}{Viral load rate of change from 2019 to 2023 (log10).}
 \item{adherence_1}{First principal component analysis scores representing adherence to ART.}
 \item{adherence_2}{Second principal component analysis scores representing adherence to ART.}
 \item{adherence_3}{Third principal component analysis scores representing adherence to ART.}

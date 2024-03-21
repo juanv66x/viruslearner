@@ -8,6 +8,7 @@
 #' @param viralvars Vector of variable names related to viral data.
 #' @param logbase The base for logarithmic transformations.
 #' @param seed Seed for reproducibility.
+#' @param folds Number of folds for cross-validation
 #' @param repetitions Number of repetitions for cross-validation.
 #' @param gridsize Size of the grid for hyperparameter tuning.
 #'
@@ -27,11 +28,12 @@
 #' viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")
 #' logbase <- 10
 #' seed <- 1501
-#' repetitions <- 2
+#' folds <- 2
+#' repetitions <- 1
 #' gridsize <- 1
-#' cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
+#' cd_ens(outcome, traindata, viralvars, logbase, seed, folds, repetitions, gridsize)
 #' }
-cd_ens <- function(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize) {
+cd_ens <- function(outcome, traindata, viralvars, logbase, seed, folds, repetitions, gridsize) {
   stacks::stacks() |>
     stacks::add_candidates(
       dplyr::bind_rows(
@@ -88,7 +90,7 @@ cd_ens <- function(outcome, traindata, viralvars, logbase, seed, repetitions, gr
       ) |>
         workflowsets::workflow_map(
           seed = seed,
-          resamples = rsample::vfold_cv(traindata, repeats = repetitions),
+          resamples = rsample::vfold_cv(traindata, v = folds, repeats = repetitions),
           grid = gridsize,
           control = tune::control_grid(
             save_pred = TRUE,

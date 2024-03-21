@@ -3,7 +3,7 @@
 \docType{data}
 \name{viral_new}
 \alias{viral_new}
-\title{Viral Rates Dataset}
+\title{Viral New Dataset}
 \format{
 A data frame with 87 rows and 21 variables:
 \describe{

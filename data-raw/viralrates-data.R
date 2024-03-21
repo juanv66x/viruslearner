@@ -13,9 +13,18 @@ recovery_rates <- viral_new |>
     recovery_rate_2021 = (cd_2021 - cd_2019) / cd_2019,
     recovery_rate_2022 = (cd_2022 - cd_2021) / cd_2021,
     recovery_rate_2023 = (cd_2023 - cd_2022) / cd_2022,
+    rr_2021_2yr = (cd_2021 - cd_2018) / cd_2018,
+    rr_2022_2yr = (cd_2022 - cd_2019) / cd_2019,
+    rr_2023_2yr = (cd_2023 - cd_2021) / cd_2021,
+    rr_2022_3yr = (cd_2022 - cd_2018) / cd_2018,
+    rr_2023_3yr = (cd_2023 - cd_2019) / cd_2019,
+    rr_2023_4yr = (cd_2023 - cd_2018) / cd_2018,
     viral_rate_2021 = (log10(vl_2021) - log10(vl_2019)) / log10(vl_2019),
     viral_rate_2022 = (log10(vl_2022) - log10(vl_2021)) / log10(vl_2021),
-    viral_rate_2023 = (log10(vl_2023) - log10(vl_2022)) / log10(vl_2022)
+    viral_rate_2023 = (log10(vl_2023) - log10(vl_2022)) / log10(vl_2022),
+    vrate_2022_2yr = (log10(vl_2022) - log10(vl_2019)) / log10(vl_2019),
+    vrate_2023_2yr = (log10(vl_2023) - log10(vl_2021)) / log10(vl_2021),
+    vrate_2023_3yr = (log10(vl_2023) - log10(vl_2019)) / log10(vl_2019)
   ) 
 
 viralrates <- recovery_rates |> 

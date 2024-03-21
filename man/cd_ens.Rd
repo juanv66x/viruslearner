@@ -4,7 +4,16 @@
 \alias{cd_ens}
 \title{CD4 Cell Count or Viral Load Ensemble Learning Through Stacking of Models.}
 \usage{
-cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
+cd_ens(
+  outcome,
+  traindata,
+  viralvars,
+  logbase,
+  seed,
+  folds,
+  repetitions,
+  gridsize
+)
 }
 \arguments{
 \item{outcome}{The name of the outcome variable.}
@@ -16,6 +25,8 @@ cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
 \item{logbase}{The base for logarithmic transformations.}
 
 \item{seed}{Seed for reproducibility.}
+
+\item{folds}{Number of folds for cross-validation}
 
 \item{repetitions}{Number of repetitions for cross-validation.}
 
@@ -41,8 +52,9 @@ traindata <- cd_train
 viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")
 logbase <- 10
 seed <- 1501
-repetitions <- 2
+folds <- 2
+repetitions <- 1
 gridsize <- 1
-cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
+cd_ens(outcome, traindata, viralvars, logbase, seed, folds, repetitions, gridsize)
 }
 }
