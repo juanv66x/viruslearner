@@ -25,6 +25,25 @@ The goal of viruslearner is to leverage Ensemble Learning techniques for HIV-Rel
 You can install the development version of viruslearner from
 [GitHub](https://github.com/) with:
 
+```{r setup}
+# install.packages("devtools")
+devtools::install_github("juanv66x/viruslearner")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem in modelling CD4 lynphocites and viral load related data.
+
+```{r example}
+library(viruslearner)
+## basic example code
+```
+
+You can explore the package built-in data sets.
+
+```{r data}
+data(viral_new)
+```
 
 
 
