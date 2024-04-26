@@ -86,7 +86,7 @@ set.seed(123)
 cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, TRUE, TRUE, FALSE)
 ```
 
-```{r vir2, echo = FALSE, eval = TRUE}
+```{r vir2, echo = FALSE, eval = TRUE, warning=FALSE, message=FALSE}
 library(baguette)
 library(kernlab)
 library(kknn)
@@ -130,7 +130,7 @@ predicted <- ".pred"
 obj_mod1 |> cd_fit(outcome, testdata, predicted, TRUE)
 ```
 
-The package specifically provides the pre-defined model `obj_mod1` of a `cd_ens` simple model output.
+The package specifically provides the pre-defined model `obj_mod1` of a `cd_ens` regression model output.
 
 ## Cardiovascular Risk Data for PLHIV
 

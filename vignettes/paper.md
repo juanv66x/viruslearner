@@ -12,11 +12,11 @@ authors:
 affiliations:
  - name: Universidad Autónoma de Guerrero, México
    index: 1  
-#output: rmarkdown::html_vignette
+#output: pdf_document
 output: pdf_document
 bibliography: library.bib
 vignette: >
-  %\VignetteIndexEntry{paper}
+  %\VignetteIndexEntry{paper} 
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

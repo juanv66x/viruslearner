@@ -46,11 +46,11 @@ structure in individual trajectories and provides a concise summary of each traj
 library(tidyverse)
 library(cowplot)
 res_pca$ind$coord |>
-    bind_cols(viral_new) |>
+  bind_cols(viral_new) |>
   ggplot(aes(x = Dim.1, y = Dim.2)) +
-  geom_point(size = 1.5) +
-  theme_half_open(12) + 
-  background_grid()
+  geom_point(size = 1.5) #+
+# theme_half_open(12) + 
+# background_grid()
 ```
 
 # Rotation matrix
@@ -114,42 +114,35 @@ ggarrange(
     bind_cols(viral_new) |>
     ggplot(aes(x = Dim.1, y = cd_2023)) +
     geom_point() +
-    geom_smooth(method = "lm") +
+    # geom_smooth(method = "lm") +
     labs(x = paste0("PC1: ", round(variance_exp[1]*100), "%"),
          y = "CD4T cells/mm blood") +
-    theme_minimal_hgrid(12),
+   theme_minimal_hgrid(12),
   res_pca$ind$coord |>
     bind_cols(viral_new) |>
     ggplot(aes(x = Dim.1, y = log10(vl_2023 + 1))) +
     geom_point() +
-    geom_smooth(method = "lm") +
+    # geom_smooth(method = "lm") +
     labs(x = paste0("PC1: ", round(variance_exp[1]*100), "%"),
          y = "Log(HIV RNA copies/ml)") +
-    theme_minimal_hgrid(12),
+   theme_minimal_hgrid(12),
   res_pca$ind$coord |>
     bind_cols(viral_new) |>
     ggplot(aes(x = Dim.2, y = cd_2023)) +
     geom_point() +
-    geom_smooth(method = "lm") +
+    # geom_smooth(method = "lm") +
     labs(x = paste0("PC2: ", round(variance_exp[2]*100), "%"),
          y = "CD4T cells/mm blood") +
-    theme_minimal_hgrid(12),
+   theme_minimal_hgrid(12),
   res_pca$ind$coord |>
     bind_cols(viral_new) |>
     ggplot(aes(x = Dim.2, y = log10(vl_2023 + 1))) +
     geom_point() +
-    geom_smooth(method = "lm") +
+    # geom_smooth(method = "lm") +
     labs(x = paste0("PC2: ", round(variance_exp[2]*100), "%"),
          y = "Log(HIV RNA copies/ml)") +
-    theme_minimal_hgrid(12),
+   theme_minimal_hgrid(12),
   labels = c("A", "B", "C", "D"), nrow = 2, ncol = 2
-  )
+)
 ```
 
-# Individual coordinates as scores
-
-The extracted coordinates for the individual observations serve as the transformed variable for scoring the adherence to ART. These values get stored in the `res_pca$ind$coord` object.
-
-```{r corpc}
-res_pca$ind$coord
-```
