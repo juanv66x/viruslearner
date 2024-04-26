@@ -1,5 +1,5 @@
 Package: viruslearner
-Title: What the Package Does (One Line, Title Case)
+Title: Ensemble Learning for HIV-Related Metrics
 Version: 0.0.0.9000
 Authors@R: 
     person("Juan Pablo", "Acuña González", email = "acua6307@gmail.com", role = c("aut", "cre", "cph"),
