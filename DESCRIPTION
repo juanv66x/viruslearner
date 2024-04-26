@@ -46,3 +46,4 @@ Imports:
     workflows,
     workflowsets,
     yardstick
+VignetteBuilder: knitr

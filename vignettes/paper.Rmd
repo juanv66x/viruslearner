@@ -1,0 +1,240 @@
+---
+title: "viruslearner: Ensemble Learning for HIV-Related Metrics"
+tags:
+  - R
+  - statistical modeling
+  - ensemble learning
+  - HIV research
+authors:
+  - name: Juan Pablo Acuña González.
+    orcid: 0009-0003-6029-6560
+    affiliation: 1 
+affiliations:
+ - name: Universidad Autónoma de Guerrero, México
+   index: 1  
+#output: rmarkdown::html_vignette
+output: pdf_document
+bibliography: library.bib
+vignette: >
+  %\VignetteIndexEntry{paper}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Summary
+
+A comprehensive tool for advanced statistical modeling and ensemble learning (EL) in the context of HIV research. The scope and purpose of the project are to model CD4 T-cell count data, viral load data, and other relevant information in the HIV research context. Its goal is to analyze, predict, and compute risks related to key viral metrics.
+
+```{r setup}
+library(viruslearner)
+```
+
+
+# Statement of Need
+
+The package fills a critical need in the field of HIV research by providing specialized functions in EL techniques inspired by model stacking principles. It adheres to tidymodels principles, focusing on manipulating tidyverse-ordered data to produce high-quality statistical and EL models with a robust and reproducible framework.
+
+The importance of mathematical models in describing systems and capturing relationships in data is emphasized, with a focus on reducing complex relationships to simpler terms for ease of use and promoting good modeling practices. 
+
+This need is further underscored by the significance of Ensemble Learning (EL) techniques, which have gained considerable importance in enhancing predictive accuracy by combining multiple predictors. Stacked generalization, introduced by @WOLPERT1992241, is a powerful EL technique aimed at minimizing the generalization error rate of one or more generalizers. A generalizer is an algorithm that predicts the main function mapping input variables (such as patient data) to an output variable (such as viral load or CD4 T-cell count). Examples of generalizers include backpropagated neural networks, classifier systems, and methods based on minimum description length principles.
+
+Furthermore, the integration of EL techniques like bagging and biased Support Vector Machine (SVM) classifiers, as discussed in @Hu2022-aj and @Mei2013-pr respectively, addresses critical challenges related to imbalanced and noisy data in HIV research data sets. These methods treat prediction as a binary classification task, focusing on reducing sensitivity to negative samples and enhancing prediction accuracy.
+
+Additionally, the package aligns with other R packages such as stacks [@Couch2022-wh], which is specifically designed for stacked ensemble modeling and integrates with the tidymodels ecosystem. This alignment with established methodologies and tools enhances the accessibility and usability for diverse needs of researchers and practitioners in the HIV research community.
+
+In the context of viral load modeling and antiretroviral therapy (ART) analysis, @Saha2024-qd aim to address the importance of early HIV diagnosis using Machine Learning (ML) techniques, including EL. Objectives include reducing new HIV/AIDS cases, monitoring prevalence, and achieving Sustainable Development Goals. The research proposes an ML model for early HIV diagnosis based on daily life activity and physical relationships. ML models analyze medical data to detect subtle patterns indicative of early-stage HIV. Various individual ML models are applied, and a final classifier is optimized using Grid Search Optimization (GSO) for hyperparameter tuning. The model evaluates performance using confusion metrics, ROC curves, and cross-validation. @Xu2019-wh develop accurate binary classification rules in the context of EL methods and their application to HIV. The article explores direct and score-based classification methods, highlighting the motivation to develop a risk score to predict virological failure classification at different stages of HIV monitoring. The concept of weighted classification loss is introduced, and a conditional threshold approach and a joint threshold approach are proposed for optimal classification rule estimation. The joint threshold is implemented using the Super Learner (SL) method, demonstrating its superior performance compared to the conditional threshold in simulation studies and empirical examples. The results emphasize the importance of minimizing weighted classification loss.
+
+On the software side, other R packages for implementing EL include: EnsembleML [@EnsembleML2024], a package used for feature creation in time series and frequency, building regression and classification models, and combining these models into an ensemble; stacking [@Nukui2023-zm], for applying stacking techniques in biology and allowing cross-validation of training data with multiple base learners, using predicted values as explanatory variables for meta-learning; endoR [@Ruaud2022-pd], facilitating tree model interpretation by creating a decision ensemble and extracting information on the importance of individual features and their interactions in the microbiota field; metaEnsembleR [@metaEnsembleR2020], a package specializing in meta-level EL (classification, regression) and is fully automated, making heterogeneous ensemble learning techniques straightforward for solving everyday predictive problems; EFS [@Neumann2017-lk], for implementing EL on multiple feature selection methods and combining their normalized outputs to obtain quantitative ensemble importance by integrating eight different methods that can be used individually or combined into an ensemble; and ensembleR [@ensembleR2016] allowing the creation of millions of unique ensembles in a single line of code by accepting any number of ML models as base models and one as a top model to produce an ensemble of models.
+
+The package aims to prevent common errors and facilitate proper use, ensuring accessibility for users with varying levels of experience.
+
+For additional references, please refer to the package documentation and GitHub repository <https://github.com/juanv66x/viruslearner>.   
+
+
+# Exploring Diverse data Sets in viruslearner
+
+In this study, several data sets are used to exemplify advanced statistical modeling and ensemble learning (EL) in the context of HIV research. The primary objective of the analysis is to model CD4 T-cell count data, viral load data, and other relevant information pertinent to HIV research. The approach focuses on analyzing, predicting, and assessing risks related to key viral metrics.
+
+To begin, a data set is imported for analysis. Risk-related viral data reflects various functionalities crucial for modeling and EL processes.
+
+## Viral load and CD4 lymphocite data
+
+The training data set `cd_train` contains the necessary variables for analysis, including the outcome variable `cd_2023` and viral load variables `vl_2019`, `vl_2021`, `vl_2022`, and `vl_2023`. Additionally, other parameters are set such as the logarithmic base, random seed, number of repetitions, and grid size.
+
+```{r vir1, echo = TRUE, eval = FALSE}
+library(kernlab)
+library(kknn)
+library(ranger)
+library(rules)
+data("cd_train", package = "viruslearner")
+outcome <- "cd_2023"
+traindata <- cd_train
+viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")
+logbase <- 10
+seed <- 1501
+repetitions <- 2
+gridsize <- 1
+set.seed(123)
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, TRUE, TRUE, FALSE)
+```
+
+```{r vir2, echo = FALSE, eval = TRUE}
+library(baguette)
+library(kernlab)
+library(kknn)
+library(ranger)
+library(rules)
+library(tidyverse)
+library(tidymodels)
+data("obj_mod1", package = "viruslearner")
+obj_mod1
+```
+
+After initializing thr environment, ensemble learning is conduced using the `cd_ens` function. This function takes the input parameters and additional flags for specific functionalities such as visualization and model evaluation. The `cd_ens` function is instrumental in building and evaluating ensemble models to predict CD4 T-cell counts based on viral load data.
+
+Next, the `cd_stack` function generate visualizations depicting the weights of individual models within the ensemble. This step allows for a deeper understanding of how each model contributes to the overall predictive performance of the ensemble.
+
+```{r vir3, echo = TRUE, eval = FALSE}
+obj_mod <- 
+  cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, TRUE, TRUE, FALSE)
+obj_mod |> cd_stack()
+```
+
+```{r vir4, echo = FALSE, fig.width = 6}
+obj_mod1 |> cd_stack()
+```
+
+The `cd_fit` function performs a model fit using the specified outcome variable, test data, and predicted format values. After running this code, it generates a tibble with metrics such as root mean squared error (RMSE) and R² (rsq) to evaluate the model's performance. The resulting tibble provides insights into the model's accuracy and explanatory power, helping in the assessment of effective predictive models based on the test data. The data set `cd_test` contains the necessary variables for testing trinig data `cd_train`.
+
+```{r vir5, echo = TRUE, eval = FALSE}
+data("cd_test", package = "viruslearner")
+testdata <- cd_test
+outcome <- "cd_2023"
+predicted <- ".pred"
+obj_mod |> cd_fit(outcome, testdata, predicted, TRUE)
+```
+
+```{r vir6, echo=FALSE, fig.width=6, warning=FALSE, message=FALSE}
+data("cd_test", package = "viruslearner")
+testdata <- cd_test
+outcome <- "cd_2023"
+predicted <- ".pred"
+obj_mod1 |> cd_fit(outcome, testdata, predicted, TRUE)
+```
+
+The package specifically provides the pre-defined model `obj_mod1` of a `cd_ens` simple model output.
+
+## Cardiovascular Risk Data for PLHIV
+
+The `viruslearner` package can handle individual screening of models for both regression and classification tasks using cardiovascular risk data for people living with HIV (PLHIV).
+
+The `rcv` data set includes information such as gender, age, marital status, education level, hypertension (HAS), diabetes (DM), smoking status, blood pressure (PAS and PAD), HDL cholesterol, total cholesterol, triglycerides, viral load, CD4 count, and cardiovascular risk (RCV).
+
+```{r vir7, echo = TRUE, eval = FALSE}
+data("rcv", package = "viruslearner")
+outcome <- "RCV"
+traindata <- rcv
+viralvars <- c("Edad", "PAS", "PAD", "HDL")
+logbase <- 10
+seed <- 1502
+repetitions <- 2
+gridsize <- 1
+set.seed(123)
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, FALSE, FALSE, FALSE)
+```
+
+```{r vir8, echo = FALSE, eval = TRUE}
+data("obj_mod2", package = "viruslearner")
+obj_mod2
+```
+
+## Absenteesem in PLHIV data
+
+To assess absenteeism related to PLHIV, the `cd_ens` function is employed to build ensemble models for predicting absenteeism based on various predictors. The `abs` data set loaded from the package, which contains relevant variables such as age, gender, marital status, occupation, education, CD4 count, viral load, days of disability, disability diagnosis, and causes of absenteeism.
+
+```{r vir9, echo = TRUE, eval = FALSE}
+data("abs", package = "viruslearner")
+outcome <- "certificado_incapacidad"
+traindata <- abs
+logbase <- 10
+seed <- 1503
+repetitions <- 2
+gridsize <- 1
+set.seed(123)
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, FALSE, TRUE, FALSE)
+```
+
+```{r vi10, echo = FALSE, eval = TRUE}
+data("obj_mod3", package = "viruslearner")
+obj_mod3
+```
+
+To extend the evaluation of absenteeism in PLHIV data, individual model screening is conducted and compared using various machine learning algorithms available in the `viruslearner` package. The objective is to assess the performance of different models in predicting absenteeism-related outcomes.
+
+```{r vi11, echo = TRUE, eval = FALSE}
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, FALSE, FALSE, FALSE)
+```
+
+```{r vi12, echo = FALSE, eval = TRUE}
+data("obj_mod4", package = "viruslearner")
+obj_mod4
+```
+
+## Educative intervention for PrEP/PEP knowledge in medical interns
+
+The data set `prep` contains detailed information about individuals' demographics, behavior, and knowledge related to HIV prevention strategies such as Pre-Exposure Prophylaxis (PrEP) and Post-Exposure Prophylaxis (PEP). The data set includes information about participants' gender, age, education level, and marital status. Behavioral factors are als considered in variables like condom use, number of sexual partners, history of sexually transmitted infections (STIs), alcohol and drug use, and previous HIV testing are included. The data set also captures participants' knowledge about HIV, PrEP, and PEP, including their understanding of these prevention methods, daily or intermittent PrEP usage, sources of information about PrEP/PEP, and whether they have heard of or used PEP before. Additionally, it includes information about interventions participants may have received regarding HIV prevention.
+
+```{r vi13, echo = TRUE, eval = FALSE}
+data("prep", package = "viruslearner")
+outcome <- "knowledge"
+traindata <- prep |> initial_split() |> training()
+logbase <- 10
+seed <- 1504
+repetitions <- 2
+gridsize <- 1
+set.seed(123)
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, FALSE, TRUE, FALSE)
+```
+
+```{r vi14, echo = FALSE, eval = TRUE}
+data("obj_mod5", package = "viruslearner")
+obj_mod5
+```
+
+The visualization below represents the weights of individual models within the stacked ensemble model. It illustrates how each model, such as a neural network (mlp) or support vector machine with polynomial kernel (svm_poly), contributes to the overall predictive capability of the ensemble. The weights reflect the relative importance of each model in making predictions, with higher weights indicating greater influence on the final ensemble predictions.
+
+```{r vi15, echo = TRUE, eval = FALSE}
+obj_mod <- 
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, FALSE, TRUE, FALSE)
+obj_mod |> cd_stack()
+```
+
+```{r vi16, echo = FALSE, fig.width = 6}
+obj_mod5 |> cd_stack()
+```
+
+```{r vi17, echo = TRUE, eval = FALSE}
+testdata <- prep |> initial_split() |> testing()
+outcome <- "knowledge"
+predicted <- ".pred_class"
+obj_mod |> cd_fit(outcome, testdata, predicted, FALSE)
+```
+
+```{r vi18, echo=FALSE, fig.width=6, warning=FALSE, message=FALSE}
+data("prep", package = "viruslearner")
+testdata <- prep |> initial_split() |> testing()
+outcome <- "knowledge"
+predicted <- ".pred_class"
+obj_mod5 |> cd_fit(outcome, testdata, predicted, FALSE)
+```
+
+
+# References
