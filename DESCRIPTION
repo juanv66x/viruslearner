@@ -47,3 +47,5 @@ Imports:
     workflowsets,
     yardstick
 VignetteBuilder: knitr
+URL: https://github.com/juanv66x/viruslearner
+BugReports: https://github.com/juanv66x/viruslearner/issues
