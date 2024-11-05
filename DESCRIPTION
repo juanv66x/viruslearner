@@ -1,0 +1,11 @@
+Package: viruslearner
+Title: Ensemble Learning for HIV-Related Metrics
+Version: 0.0.0.9000
+Authors@R: 
+    person("Juan Pablo", "Acuña González", email = "acua6307@gmail.com", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0009-0003-6029-6560"))
+Description: Advanced statistical modeling techniques for ensemble learning, specifically tailored to the analysis of lymphocyte counts and viral load data in the context of HIV research. Empowering researchers and practitioners, this tool provides a comprehensive solution for tasks such as analysis, prediction and risk calculation related to key viral metrics. The package incorporates cutting-edge ensemble learning principles, inspired by model stacking techniques of Simon P. Couch and Max Kuhn (2022) <doi:10.21105/joss.04471> and adhering to tidy data principles, offering a robust and reproducible framework for HIV research.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
