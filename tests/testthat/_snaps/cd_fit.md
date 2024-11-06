@@ -6,6 +6,10 @@
       
       Attaching package: 'purrr'
       
+      The following object is masked from 'package:kernlab':
+      
+          cross
+      
       The following object is masked from 'package:testthat':
       
           is_null
