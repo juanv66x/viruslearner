@@ -46,6 +46,12 @@ This function builds and evaluates custom machine learning models based on user-
 }
 \examples{
 \donttest{
+if(requireNamespace("baguette"))
+if(requireNamespace("Cubist"))
+if(requireNamespace("kernlab"))
+if(requireNamespace("kknn"))
+if(requireNamespace("ranger"))
+if(requireNamespace("rules"))
 library(baguette)
 library(Cubist)
 library(kernlab)

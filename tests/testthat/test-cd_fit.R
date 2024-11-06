@@ -1,8 +1,8 @@
 test_that("`cd_fit()` works as expected", {
   
-  library(baguette)
-  library(Cubist)
-  library(rules)
+  if(requireNamespace("baguette"))
+  if(requireNamespace("Cubist"))
+  if(requireNamespace("rules"))
   data("cd_obj1", package = "viruslearner")
   data("cd_test", package = "viruslearner")
   testdata <- cd_test

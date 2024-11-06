@@ -17,11 +17,6 @@
       
       
       $regression_models$CART_bagged
-    Message
-      ! parsnip could not locate an implementation for `bag_tree` regression model specifications using the `rpart` engine.
-      i The parsnip extension package baguette implements support for this specification.
-      i Please install (if needed) and load to continue.
-    Output
       Bagged Decision Tree Model Specification (regression)
       
       Main Arguments:

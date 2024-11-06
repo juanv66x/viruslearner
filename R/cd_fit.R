@@ -17,6 +17,9 @@
 #'
 #' @examples
 #' \donttest{
+#' if(requireNamespace("baguette"))
+#' if(requireNamespace("Cubist"))
+#' if(requireNamespace("rules"))
 #' library(baguette)
 #' library(Cubist)
 #' library(rules)
