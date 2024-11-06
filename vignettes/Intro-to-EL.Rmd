@@ -168,12 +168,14 @@ obj_mod |> cd_fit(outcome, testdata, predicted, TRUE)
 ```
 
 ```{r cd7, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
-data("cd_obj1", package = "viruslearner")
-data("cd_test", package = "viruslearner")
-testdata <- cd_test
-outcome <- "cd_2023"
-predicted <- ".pred"
-cd_obj1 |> cd_fit(outcome, testdata, predicted, TRUE)
+# data("cd_obj1", package = "viruslearner")
+# data("cd_test", package = "viruslearner")
+# testdata <- cd_test
+# outcome <- "cd_2023"
+# predicted <- ".pred"
+# cd_obj1 |> cd_fit(outcome, testdata, predicted, TRUE)
+data("cd_fit1", package = "viruslearner")
+cd_fit1
 ```
 
 ```{r cd8, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE, fig.cap="Model stacking weights obtained by EL for predicting CD4 count. The CR has the highest model weight, followed by the CR, with the LR model showing an intermediate weight."}

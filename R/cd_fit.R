@@ -7,8 +7,12 @@
 #' @param testdata The test dataset for evaluating the ensemble.
 #' @param predicted Column name of the predicted variable in a regression tidy format.
 #' @param mode If TRUE, regression mode is used; if FALSE, classification mode is used (default is TRUE).
+#' @param show_members If TRUE, outputs the retained members of the stacked ensemble model (default is FALSE).
+
 #'
-#' @return A tibble containing the root mean squared error (RMSE) and coefficient of determination (R2) metrics.
+#' @return A tibble containing the root mean squared error (RMSE) and coefficient of determination (R2) metrics,
+#' or a summary of the model members.
+#' 
 #' @export
 #'
 #' @examples
@@ -21,21 +25,26 @@
 #' testdata <- cd_test
 #' outcome <- "cd_2023"
 #' predicted <- ".pred"
-#' cd_obj1 |> cd_fit(outcome, testdata, predicted, TRUE)
+#' # To view members 
+#' cd_obj1 |> cd_fit(outcome, testdata, predicted, TRUE, show_members = TRUE)
 #' }
-cd_fit <- function(obj_mod1, outcome, testdata, predicted, mode = TRUE) {
-  if (mode == TRUE) {
-    obj_mod1 |>
-      stacks::fit_members() |>
-      stacks::predict.model_stack(testdata) |>
-      dplyr::bind_cols(testdata) |>
-      yardstick::metric_set(yardstick::rmse, yardstick::rsq)(tidyselect::all_of(outcome), tidyselect::all_of(predicted))
-  } else if (mode == FALSE) {
-    obj_mod1 |>
-      stacks::fit_members() |>
-      stacks::predict.model_stack(testdata) |>
-      dplyr::bind_cols(testdata) |> 
-      #yardstick::metric_set(yardstick::accuracy, yardstick::roc_auc)(tidyselect::all_of(outcome), tidyselect::all_of(predicted))
-      yardstick::accuracy(tidyselect::all_of(outcome), predicted)
+cd_fit <- function(obj_mod1, outcome, testdata, predicted, mode = TRUE, show_members = FALSE) {
+  if (show_members) {
+    
+    return(obj_mod1 |> stacks::fit_members())
+  } else {
+    if (mode == TRUE) {
+      obj_mod1 |>
+        stacks::fit_members() |>
+        stacks::predict.model_stack(testdata) |>
+        dplyr::bind_cols(testdata) |>
+        yardstick::metric_set(yardstick::rmse, yardstick::rsq)(tidyselect::all_of(outcome), tidyselect::all_of(predicted))
+    } else {
+      obj_mod1 |>
+        stacks::fit_members() |>
+        stacks::predict.model_stack(testdata) |>
+        dplyr::bind_cols(testdata) |> 
+        yardstick::accuracy(tidyselect::all_of(outcome), predicted)
+    }
   }
 }

@@ -1,7 +1,7 @@
 # `cd_fit()` works as expected
 
     Code
-      print(class(cd_fit(cd_obj1, outcome, testdata, predicted, TRUE)))
+      print(class(cd_fit(cd_obj1, outcome, testdata, predicted, TRUE, show_members = TRUE)))
     Message
       
       Attaching package: 'purrr'
@@ -15,5 +15,5 @@
           is_null
       
     Output
-      [1] "tbl_df"     "tbl"        "data.frame"
+      [1] "linear_stack" "model_stack"  "list"        
 

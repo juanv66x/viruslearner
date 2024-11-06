@@ -10,7 +10,7 @@ test_that("`cd_fit()` works as expected", {
   predicted <- ".pred"
   expect_snapshot(
     print(
-      class(cd_obj1 |> cd_fit(outcome, testdata, predicted, TRUE))
+      class(cd_obj1 |> cd_fit(outcome, testdata, predicted, TRUE, show_members = TRUE))
     )
   )
 })

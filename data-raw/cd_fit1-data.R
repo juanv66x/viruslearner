@@ -3,7 +3,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(readr, here)
 
 ## Variables transformation
-cd_obj1 <- readRDS(here("data-raw", "cd_obj1.RDS"))
+cd_fit1 <- readRDS(here("data-raw", "cd_fit1.RDS"))
 
 # write data in correct format to data folder ----
-usethis::use_data(cd_obj1, overwrite = TRUE)
+usethis::use_data(cd_fit1, overwrite = TRUE)
