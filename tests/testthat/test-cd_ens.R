@@ -1,5 +1,4 @@
 test_that("`cd_ens()` works as expected", {
-  library(baguette)
   library(Cubist)
   # library(dials)
   # library(dplyr)
