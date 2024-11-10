@@ -4,12 +4,27 @@
 \alias{cd_fit}
 \title{Fit and Evaluate Stacked Ensemble Model for CD4 Cell Count or Viral Load Outcome}
 \usage{
-cd_fit(obj_mod1, show_members = TRUE)
+cd_fit(
+  obj_mod1,
+  outcome,
+  testdata,
+  predicted,
+  mode = TRUE,
+  show_members = TRUE
+)
 }
 \arguments{
 \item{obj_mod1}{A stacked ensemble model.}
 
-\item{show_members}{If TRUE, outputs the retained members of the stacked ensemble model.}
+\item{outcome}{The name of the outcome variable.}
+
+\item{testdata}{The test dataset for evaluating the ensemble.}
+
+\item{predicted}{Column name of the predicted variable in a regression tidy format.}
+
+\item{mode}{If TRUE, regression mode is used; if FALSE, classification mode is used (default is TRUE).}
+
+\item{show_members}{If TRUE, outputs the retained members of the stacked ensemble model (default is FALSE).}
 }
 \value{
 A tibble containing the root mean squared error (RMSE) and coefficient of determination (R2) metrics,
@@ -26,6 +41,11 @@ library(kknn)
 library(ranger)
 library(rules)
 data("fens_obj2", package = "viruslearner")
-fens_obj2 |> cd_fit(show_members = TRUE)
+data("cd_test", package = "viruslearner")
+testdata <- cd_test
+outcome <- "cd_2023"
+predicted <- ".pred"
+# To view members 
+fens_obj2 |> cd_fit(outcome, testdata, predicted, TRUE, show_members = TRUE)
 }
 }

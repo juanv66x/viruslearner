@@ -24,7 +24,8 @@ Imports:
     tidyselect,
     tune,
     workflows,
-    workflowsets
+    workflowsets,
+    yardstick
 Suggests: 
     Cubist,
     kernlab,
