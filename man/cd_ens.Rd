@@ -4,10 +4,36 @@
 \alias{cd_ens}
 \title{Build Custom Model}
 \usage{
-cd_ens(get_models = TRUE)
+cd_ens(
+  outcome,
+  traindata,
+  viralvars,
+  logbase,
+  seed,
+  repetitions,
+  gridsize,
+  type = TRUE,
+  get_models = TRUE
+)
 }
 \arguments{
-\item{get_models}{If TRUE, returns a list of predefined models without grid search or pre-processing (default is FALSE).}
+\item{outcome}{The outcome variable for modeling.}
+
+\item{traindata}{The training dataset for model building.}
+
+\item{viralvars}{The variables related to viral data.}
+
+\item{logbase}{The base for logarithmic transformation.}
+
+\item{seed}{The random seed for reproducibility.}
+
+\item{repetitions}{The number of repetitions for cross-validation.}
+
+\item{gridsize}{The size of the hyperparameter grid for tuning.}
+
+\item{type}{If TRUE, ensemble modeling is used; if FALSE, individual model building is used.}
+
+\item{get_models}{If TRUE, returns a list of predefined models without grid search or pre-processing.}
 }
 \value{
 Depending on the parameters, either a list of predefined models or a data frame with model evaluation results.
@@ -16,6 +42,16 @@ Depending on the parameters, either a list of predefined models or a data frame 
 This function builds and evaluates custom machine learning models based on user-defined parameters
 }
 \examples{
+data("cd_train", package = "viruslearner")
+outcome <- "cd_2023"
+traindata <- cd_train
+viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023")
+logbase <- 10
+seed <- 1501
+repetitions <- 2
+gridsize <- 1
+set.seed(123)
 # Get predefined models
-cd_ens(get_models = TRUE)
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, 
+type = FALSE, get_models = TRUE)
 }

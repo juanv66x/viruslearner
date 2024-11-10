@@ -13,9 +13,18 @@ Depends:
     R (>= 2.10)
 LazyData: true
 Imports: 
+    dials,
+    dplyr,
     hardhat,
     parsnip,
-    stacks
+    recipes,
+    rsample,
+    stacks,
+    stats,
+    tidyselect,
+    tune,
+    workflows,
+    workflowsets
 Suggests: 
     Cubist,
     kernlab,
