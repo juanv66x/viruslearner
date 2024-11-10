@@ -1,6 +1,6 @@
 Package: viruslearner
 Title: Ensemble Learning for HIV-Related Metrics
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person("Juan Pablo", "Acuña González", email = "acua6307@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0003-6029-6560"))
