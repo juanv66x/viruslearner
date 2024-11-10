@@ -1,0 +1,179 @@
+---
+title: "Intro-to-EL"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Intro-to-EL}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(viruslearner)
+```
+
+
+# 4. Application of the `viruslearner` package to HGR IMSS Data
+
+When addressing the complexity of HIV-related data, it is essential to identify performance metrics that align closely with the broader objectives of data analysis. Insights gained from exploratory data analysis (EDA) inform the creation of specific model terms, facilitating an accurate representation of observed data. Various models are generated, with their performance compared by specifying or optimizing certain structural parameters through repeated data splits during resampling. Formal model comparisons help determine whether observed differences are part of experimental noise. The functions within the `viruslearner` package integrate these phases, achieving comprehensive modeling, documentation, and communication.
+
+The `viruslearner` package gathers specific data on patients living with HIV from the HGR IMSS. This data undergoes a detailed modeling process using the package’s integrated functions. Proper separation between training and test sets to prevent data leakage is vital, with quarantining of the test set from any model-building activity emphasized as a critical precaution to ensure the validity of empirical validation processes.
+
+## 4.1 Databases Used
+
+### 4.1.1 `viralrates` Database
+
+This database contains detailed patient information, including CD4 T-cell counts (`cd_2019`, `cd_2021`, `cd_2022`) and viral loads (`vl_2019`, `vl_2021`, `vl_2022`). Additionally, it includes recovery rates and viral load changes across different years. Adherence to ART is also recorded through various principal component analysis (PCA) components.
+
+### 4.1.2 `cd_train` Database
+
+This training dataset focuses specifically on modeling patient recovery, using the CD4 T-cell count in 2022 (`cd_2022`) as the outcome variable. It provides similar detailed information to the main viralrates database.
+
+### 4.1.3 `cd_test` Database
+
+This test dataset is used to evaluate the model's predictive ability for CD4 T-cell counts in 2022. It provides an independent dataset with information similar to the `cd_train` dataset.
+
+## 4.2 Methodology
+
+The modeling methodology applied is divided into several stages, following best practices in model building and evaluation, including variations in preprocessing, models, and hyperparameter tuning to find the optimal setup. Additionally, resampling is used to obtain more robust estimates of model performance rather than relying on a single dataset. After evaluating several models, candidates for EL are defined. This systematic approach leads to the selection of the final model for application to the test set.
+
+### 4.2.1 Model Specification
+
+The methodology begins by specifying the models used. Seven models were applied: Random Forest (RF), Cubist Regression (CR), Polynomial Support Vector Machine (SVM-P), Radial Basis Function Support Vector Machine (SVM-RBF), K-Nearest Neighbors (KNN), Artificial Neural Networks (ANN), and Regularized Linear Regression (RLR). Each model is defined with its specific parameters.
+
+### 4.2.2 Data Preprocessing
+
+Preprocessing includes transformations and the generation of new variables (such as logarithms, normalization, polynomials, and interactions) in the dataset.
+
+### 4.2.3 Workflow Configuration
+
+A set of three workflows combines different preprocessing techniques with each model. Each set consists of a list of preprocessors and a list of models. The first workflow uses a single, simple preprocessor that selects all predictor variables and applies three models with these variables: RF and CR regression. A second workflow applies a normalized preprocessor with normalization and logarithmic adjustments, defining four models: SVM-RBF, SVM-P, KNN, and ANN. The third workflow uses a preprocessor with traditional response surface expansion (quadratic and bidirectional interactions) and includes two models: RLR and KNN.
+
+### 4.2.4 Hyperparameter Tuning and Evaluation
+
+Hyperparameters are tuned across a sequence of values. Cross-validation with a specific number of repetitions is used for hyperparameter tuning and model evaluation on a predefined grid. Results are stored based on performance metrics. Two common regression metrics are used: Root Mean Square Error (RMSE) and the coefficient of determination ($R^2$), where RMSE measures accuracy and $R^2$ measures correlation. A comprehensive evaluation is performed using resampling to provide a more robust model performance estimate. The dataset was split into a $75\%$ training set and a $25\%$ test set, with models optimized on the training set and cross-validation results recorded.
+
+### 4.2.5 Definition of Candidate Models for EL
+
+Each workflow represents a different strategy for data handling and model selection, and the resulting model predictions are combined into a single stacked model. A penalty is applied to avoid including low-performing models. The final stacked model is selected based on performance and can be used for predictions on new datasets. Model stacking leverages the strengths of different models to improve the generalization of the final model.
+
+### 4.2.6 Results for CD4 T-Lymphocyte Count Prediction
+
+The `cd_ens` function is used to implement this methodology within the EL approach through model stacking.
+
+```{r cd1, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize) -> obj_mod
+```
+
+Arguments:
+
+  - `outcome`: The name of the outcome variable (in this case, "`cd_2023`").
+    
+  - `traindata`: The training dataset.
+    
+  - `viralvars`: A vector of names for viral-related data variables.
+
+  - `logbase`: The base for logarithmic transformations.
+    
+  - `seed`: Seed for reproducibility.
+    
+  - `repetitions`: Number of repetitions for cross-validation.
+
+  - `gridsize`: Grid size for hyperparameter tuning.
+
+The function returns a stacked ensemble model. It employs an EL model where the predictions from the training set and the observed data of the corresponding outcome are used to create a meta-learning model. This meta-model uses a regularized Generalized Linear Model (GLM) via Ridge regression. Penalties are applied to eliminate candidates from the ensemble and reduce high correlations among them.
+
+The function call provides information on the resulting ensemble stack model, including the selected members, the applied penalty, and the weights assigned to each member, using the following argument values:
+
+```{r cd2, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+data("cd_train", package = "viruslearner")
+outcome <- "cd_2023" 
+traindata <- cd_train 
+viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023") 
+logbase <- 10 
+seed <- 1501 
+repetitions <- 11 
+gridsize <- 10
+```
+
+```{r cd3, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+library(Cubist)
+library(kernlab)
+library(kknn)
+library(ranger)
+library(rules)
+data("cd_train", package = "viruslearner")
+outcome <- "cd_2023" 
+traindata <- cd_train 
+viralvars <- c("vl_2019", "vl_2021", "vl_2022", "vl_2023") 
+logbase <- 10 
+seed <- 1501 
+repetitions <- 2 
+gridsize <- 1
+library(stacks)
+data("fens_obj2", package = "viruslearner")
+fens_obj2
+```
+
+In the provided example, members were retained, with a specific penalty and associated weight. This function offers an advanced and customizable approach to EL, enabling researchers to adjust and optimize models to predict CD4 cell counts in HIV research contexts.
+
+The `cd_stack` function creates visualizations that show the contribution of each model obtained through ensemble learning via model stacking:
+
+```{r cd4, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+cd_stack(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize)
+```
+
+The function generates a graph representing a stacked dataset with multiple model definitions and candidate members. In the generated graph, Figure 7, weight values for each model are displayed. These weights indicate each model’s relative contribution to the ensemble learning, illustrating the significance of each model in predicting CD4 cell counts.
+
+The `cd_fit` function is used to build and evaluate the learning model. This function constructs a stacked ensemble model by incorporating various preprocessing workflows and models. It then evaluates model performance using metrics such as RMSE and the $R^2$.
+
+```{r cd5, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+cd_fit(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize,
+testdata, predicted)
+```
+
+The function returns a table containing RMSE and $R^2$ metrics. It employs the following arguments for its implementation:
+
+  - `obj_mod1`: A stacked ensemble model.
+  
+  - `outcome`: The name of the outcome variable.
+
+  - `testdata`: The test dataset used to evaluate the ensemble.
+    
+  - `predicted`: The column name of the predicted variable in tidy format for regression.
+  
+  - `mode`: If `TRUE`, regression mode is used; if `FALSE`, classification mode is used (default is `TRUE`).
+
+These arguments take the following values:
+
+```{r cd6, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+data("cd_test", package = "viruslearner")
+outcome <- "cd_2023"
+testdata <- cd_test
+predicted <- ".pred"
+obj_mod |> cd_fit(outcome, testdata, predicted, TRUE)
+```
+
+```{r cd7, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+# data("cd_obj1", package = "viruslearner")
+# data("cd_test", package = "viruslearner")
+# testdata <- cd_test
+# outcome <- "cd_2023"
+# predicted <- ".pred"
+# cd_obj1 |> cd_fit(outcome, testdata, predicted, TRUE)
+data("fens_fit1", package = "viruslearner")
+fens_fit1
+```
+
+```{r cd8, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE, fig.cap="Model stacking weights obtained by EL for predicting CD4 count. The CR has the highest model weight, followed by the CR, with the LR model showing an intermediate weight."}
+fens_obj2 |> cd_stack()
+```
+
+These metrics provide a quantitative assessment of the ensemble learning model's performance in predicting CD4 cell counts in the test set. A low RMSE and an $R^2$ close to 1 indicate a good model fit.
+
