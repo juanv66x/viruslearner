@@ -2,3 +2,4 @@
 
 export(cd_ens)
 export(cd_fit)
+export(cd_stack)
