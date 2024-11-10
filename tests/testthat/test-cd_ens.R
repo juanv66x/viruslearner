@@ -12,7 +12,7 @@ test_that("`cd_ens()` works as expected", {
   expect_snapshot(
   print(
     cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize,
-           type = FALSE, get_models = TRUE) 
+           mode = TRUE, type = FALSE, get_models = TRUE) 
   )
 )
 })

@@ -12,7 +12,8 @@ cd_ens(
   seed,
   repetitions,
   gridsize,
-  type = TRUE,
+  mode = TRUE,
+  type = FALSE,
   get_models = TRUE
 )
 }
@@ -30,6 +31,8 @@ cd_ens(
 \item{repetitions}{The number of repetitions for cross-validation.}
 
 \item{gridsize}{The size of the hyperparameter grid for tuning.}
+
+\item{mode}{If TRUE, regression mode is used; if FALSE, classification mode is used (default is TRUE).}
 
 \item{type}{If TRUE, ensemble modeling is used; if FALSE, individual model building is used.}
 
@@ -52,6 +55,6 @@ repetitions <- 2
 gridsize <- 1
 set.seed(123)
 # Get predefined models
-cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize, 
-type = FALSE, get_models = TRUE)
+cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions, gridsize,
+mode = TRUE, type = FALSE, get_models = TRUE)
 }

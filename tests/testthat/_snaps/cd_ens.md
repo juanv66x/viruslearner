@@ -2,7 +2,7 @@
 
     Code
       print(cd_ens(outcome, traindata, viralvars, logbase, seed, repetitions,
-        gridsize, type = FALSE, get_models = TRUE))
+        gridsize, mode = TRUE, type = FALSE, get_models = TRUE))
     Output
       $regression_models
       $regression_models$rf
