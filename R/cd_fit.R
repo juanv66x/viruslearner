@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' library(Cubist)
 #' library(kernlab)
 #' library(kknn)
@@ -18,6 +19,7 @@
 #' library(rules)
 #' data("fens_obj2", package = "viruslearner")
 #' fens_obj2 |> cd_fit(show_members = TRUE)
+#' }
 cd_fit <- function(obj_mod1, show_members = TRUE) {
   if (show_members) {
     

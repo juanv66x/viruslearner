@@ -19,6 +19,7 @@ or a summary of the model members.
 This function fits a stacked ensemble model built with pre-processing and modeling workflows.
 }
 \examples{
+\donttest{
 library(Cubist)
 library(kernlab)
 library(kknn)
@@ -26,4 +27,5 @@ library(ranger)
 library(rules)
 data("fens_obj2", package = "viruslearner")
 fens_obj2 |> cd_fit(show_members = TRUE)
+}
 }
